@@ -1,6 +1,5 @@
 # Rootara后端
 # docker build --build-arg PYTHON_VERSION=3.11 -t rootara_backend:v0.0.1 .
-
 # 使用一个具体的 Python 版本，例如 bullseye 或 bookworm
 ARG PYTHON_VERSION=3.13.3
 FROM python:${PYTHON_VERSION}-slim-bookworm
@@ -57,6 +56,9 @@ RUN apt-get clean && \
     && pip install --no-cache-dir \
     pandas \
     pysam \
+    fastapi \
+    uvicorn \
+    pydantic \
     # 清理 apt 缓存和不再需要的构建依赖
     && apt-get purge -y --auto-remove \
     build-essential \
@@ -76,17 +78,10 @@ RUN pip install --no-cache-dir git+https://github.com/stevenliuyi/admix && \
     git clone https://gitlab.com/bio_anth_decode/haploGrouper.git
 
 # 加入其他脚本
-# COPY . /app/rootara_scripts
-
-# 将你的应用代码复制到镜像中
-# COPY . .
+COPY . .
 
 # 暴露你应用运行的端口 (根据你的后端应用修改)
-# EXPOSE 8000
+EXPOSE 8000
 
-# 定义容器启动时运行的命令 (根据你的后端应用修改)
-# CMD ["python", "your_main_script.py"]
 # 或者如果你用 gunicorn/uvicorn:
-# CMD ["gunicorn", "-b", "0.0.0.0:8000", "your_project.wsgi:application"]
-
-
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
