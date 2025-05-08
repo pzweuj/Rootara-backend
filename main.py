@@ -1,7 +1,6 @@
 # coding=utf-8
-from fastapi import FastAPI, HTTPException, Query, Path as FastApiPath
+from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List, Optional, Dict
 
 # 自定义脚本API
 from scripts.rootara_initial import init_sqlite_db                                                   # 初始化数据库

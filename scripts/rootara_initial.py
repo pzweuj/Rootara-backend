@@ -3,6 +3,20 @@
 
 import sqlite3
 import os
+import random
+from datetime import datetime
+from scripts.rootara_report_create import create_new_report
+
+def generate_random_id():
+    """
+    生成10位随机编号，由大写字母和数字组成
+    :return: 10位随机编号字符串
+    """
+    # 定义字符池：26个大写字母和10个数字
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    # 生成10位随机编号
+    random_id = ''.join(random.choice(chars) for _ in range(10))
+    return random_id
 
 def init_sqlite_db(db_path):
     """
@@ -26,7 +40,7 @@ def init_sqlite_db(db_path):
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email TEXT UNIQUE NOT NULL,
             user_id TEXT UNIQUE NOT NULL,
-            password_hash TEXT NOT NULL,
+            password_hash TEXT DEFAULT NULL,
             name TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -69,8 +83,8 @@ def init_sqlite_db(db_path):
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS haplogroup (
             report_id TEXT PRIMARY KEY,
-            y_hap TEXT DEFAULT NAN,
-            mt_hap TEXT DEFAULT NAN
+            y_hap TEXT DEFAULT null,
+            mt_hap TEXT DEFAULT null
         )
         ''')
 
@@ -139,13 +153,46 @@ def init_sqlite_db(db_path):
         print(f"初始化数据库失败: {e}")
         return False
 
+# 生成模板数据
+def generate_template_data(name, email, db_path):
+    # 用户的唯一ID
+    user_id = 'ID_' + generate_random_id()
+    template_id = 'RPT_TEMPLATE01'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # 记录信息到用户表
+    cursor.execute('''
+    INSERT INTO users (email, user_id, name, created_at)
+    VALUES (?, ?, ?, ?)
+    ''', (email, user_id, name, datetime.now()))
+
+    # 创建祖源分析记录
+    cursor.execute('''
+    INSERT INTO admixture (report_id, Omotic, North_Sea_Germanic, West_African, East_Asian)
+    VALUES (?,?,?,?,?)
+    ''', (template_id, 0.01, 0.02, 13.28, 86.69))
+    
+    # 创建单倍群信息表
+    cursor.execute('''
+    INSERT INTO haplogroup (report_id, y_hap, mt_hap)
+    VALUES (?,?,?)
+    ''', (template_id, 'O2a2a1a1a', 'F1a1'))
+
+    # 先提交一次事务关闭连接
+    conn.commit()
+    conn.close()
+
+    # 创建SNP表
+    create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
+
 # 使用示例
 if __name__ == "__main__":
     # 数据库文件路径
-    db_file = os.path.join(os.path.dirname(__file__), "rootara.db")
-    
-    # 初始化数据库
-    if init_sqlite_db(db_file):
+    db_file = '/rootara/rootara.db'
+    if os.path.exists(db_file):
+        print(f"数据库文件已存在: {db_file}")
+    elif init_sqlite_db(db_file):
         print(f"数据库初始化成功: {db_file}")
     else:
         print("数据库初始化失败")

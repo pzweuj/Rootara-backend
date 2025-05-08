@@ -41,7 +41,31 @@ def format_covert(input_data, source_from):
 def create_new_report(user_id, input_data, source_from, report_name, db_path, default_report=False, initail=False):
     # 当在初始化模式下，创建新的报告时，需要将default_report设置为True
     if initail:
+        # 连接到数据库
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
         default_report = True
+        # 初始化模式下，只需要创建出SNP表即可
+        report_id = 'RPT_TEMPLATE01'
+        rawdata_id = 'RDT_TEMPLATE01'
+        rootara_csv = format_covert(input_data, source_from)
+        csv_to_sqlite(rootara_csv, db_path, report_id, force=True)
+        shutil.rmtree(os.path.dirname(rootara_csv))
+
+        # 查看当前的report_id表的总行数
+        cursor.execute('SELECT COUNT(*) FROM ' + report_id)
+        total_snp = cursor.fetchone()[0]
+
+        # 将报告信息插入到reports表中
+        cursor.execute('''
+            INSERT INTO reports (report_id, user_id, file_format, data_source, name, select_default, total_snps, upload_date)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (report_id, user_id, 'txt', source_from, report_name, True, total_snp, datetime.now()))
+
+        # 提交更改并关闭连接
+        conn.commit()
+        conn.close()
+        return 201
     
     # 连接到数据库，如果这是用户上传的第一个报告，则自动设置为默认报告
     conn = sqlite3.connect(db_path)
