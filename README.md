@@ -1,6 +1,6 @@
 # Rootara-backend
 
-Rootara-backend 是 Rootara 的后端服务。
+Rootara-backend 是 [Rootara](https://github.com/pzweuj/Rootara) 的后端服务。
 
 ## 第三方模块
 
