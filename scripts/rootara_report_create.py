@@ -9,12 +9,24 @@ import sqlite3
 import random
 import tempfile
 import shutil
-from scripts.rootara_admixture import data_to_sqlite as admix_data_to_sqlite
-from scripts.rootara_snp_2_db import csv_to_sqlite
-from scripts.rootara_2_vcf import trans_rootara_to_vcf
-from scripts.rootara_haplogroup import insert_haplogroup_to_db
+import sys
 from datetime import datetime
 import argparse
+
+# 根据脚本运行方式选择合适的导入路径
+if __name__ == "__main__":
+    # 将项目根目录添加到模块搜索路径
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from scripts.rootara_admixture import data_to_sqlite as admix_data_to_sqlite
+    from scripts.rootara_snp_2_db import csv_to_sqlite
+    from scripts.rootara_2_vcf import trans_rootara_to_vcf
+    from scripts.rootara_haplogroup import insert_haplogroup_to_db
+else:
+    # 作为模块导入时使用相对导入
+    from scripts.rootara_admixture import data_to_sqlite as admix_data_to_sqlite
+    from scripts.rootara_snp_2_db import csv_to_sqlite
+    from scripts.rootara_2_vcf import trans_rootara_to_vcf
+    from scripts.rootara_haplogroup import insert_haplogroup_to_db
 
 # 已测试1000000次，没有重复
 def generate_random_id():
@@ -30,7 +42,7 @@ def generate_random_id():
 
 # 使用GO脚本进行格式转换
 def format_covert(input_data, source_from):
-    rootara_core_path = '/app/database/Rootara.core.202404.gz'
+    rootara_core_path = '/app/database/Rootara.core.202404.txt.gz'
     go_binary = '/app/scripts/rootara_reader'
     temp_dir = tempfile.mkdtemp()
     output_file = os.path.join(temp_dir, 'output.rootara.csv')

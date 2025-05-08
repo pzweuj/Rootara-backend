@@ -5,8 +5,17 @@ import argparse
 import sqlite3
 import os
 import random
+import sys
 from datetime import datetime
-from scripts.rootara_report_create import create_new_report
+
+# 根据脚本运行方式选择合适的导入路径
+if __name__ == "__main__":
+    # 将项目根目录添加到模块搜索路径
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from scripts.rootara_report_create import create_new_report
+else:
+    # 作为模块导入时使用相对导入
+    from scripts.rootara_report_create import create_new_report
 
 def generate_random_id():
     """
