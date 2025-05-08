@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 # 自定义脚本API
-from scripts.rootara_initial import init_sqlite_db                                                   # 初始化数据库
+from scripts.rootara_initial import init_db                                                          # 初始化数据库
 from scripts.rootara_report_create import create_new_report                                          # 创建新报告
 from scripts.rootara_report_del import delete_report                                                 # 删除报告
 from scripts.rootara_reports_info import update_report_name, get_report_info, list_all_report_ids    # 报告信息相关
@@ -34,11 +34,11 @@ DB_PATH = '/app/database/rootara.db'
 
 ## 初始化数据库
 @app.get("/database/init", response_model=StatusOutput, tags=["database_init"])
-async def api_init_sqlite_db():
+async def api_init_db(email, name):
     """
     Database initial.
     """
-    init_sqlite_db(DB_PATH)
+    init_db(email, name, DB_PATH)
     return StatusOutput(201)
 
 ## 创建报告

@@ -1,6 +1,7 @@
 # coding=utf-8
 # sqlite3 初始化
 
+import argparse
 import sqlite3
 import os
 import random
@@ -75,7 +76,7 @@ def init_sqlite_db(db_path):
             clnsig TEXT DEFAULT null,
             clndn TEXT DEFAULT null,
             genotype TEXT,
-            check TEXT
+            gt TEXT
         )
         ''')
 
@@ -186,13 +187,28 @@ def generate_template_data(name, email, db_path):
     # 创建SNP表
     create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
 
-# 使用示例
-if __name__ == "__main__":
-    # 数据库文件路径
-    db_file = '/rootara/rootara.db'
-    if os.path.exists(db_file):
+def init_db(name, email, db_file, force=False):
+    if os.path.exists(db_file) and force is False:
         print(f"数据库文件已存在: {db_file}")
     elif init_sqlite_db(db_file):
+        generate_template_data(name, email, db_file)
         print(f"数据库初始化成功: {db_file}")
     else:
         print("数据库初始化失败")
+
+def main():
+    parser = argparse.ArgumentParser(description='初始化SQLite数据库')
+    parser.add_argument('--name', type=str, help='用户姓名')
+    parser.add_argument('--email', type=str, help='用户邮箱')
+    parser.add_argument('--db', type=str, help='数据库路径')
+    parser.add_argument('--force', type=bool, help='是否强制覆盖已存在的数据库，默认False', default=False)
+    args = parser.parse_args()
+
+    if not args.name or not args.email or not args.db:
+        parser.print_help()
+        return
+
+    init_db(args.name, args.email, args.db, args.force)
+
+if __name__ == "__main__":
+    main()
