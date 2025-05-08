@@ -93,6 +93,7 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     # 将原始数据保存到固定目录中
     shutil.copy2(input_data, os.path.join('/rootara/rawdata', rawdata_id + '.' + extend_name))
     shutil.rmtree(temp_dir)
+    return 201
 
 def main():
     parser = argparse.ArgumentParser(description='创建新的报告')
