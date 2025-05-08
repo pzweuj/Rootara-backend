@@ -9,10 +9,10 @@ import sqlite3
 import random
 import tempfile
 import shutil
-from rootara_admixture import data_to_sqlite as admix_data_to_sqlite
-from rootara_snp_2_db import csv_to_sqlite
-from rootara_2_vcf import trans_rootara_to_vcf
-from rootara_haplogroup import insert_haplogroup_to_db
+from scripts.rootara_admixture import data_to_sqlite as admix_data_to_sqlite
+from scripts.rootara_snp_2_db import csv_to_sqlite
+from scripts.rootara_2_vcf import trans_rootara_to_vcf
+from scripts.rootara_haplogroup import insert_haplogroup_to_db
 from datetime import datetime
 import argparse
 
@@ -30,8 +30,8 @@ def generate_random_id():
 
 # 使用GO脚本进行格式转换
 def format_covert(input_data, source_from):
-    rootara_core_path = '/path/to/rootara.gz'
-    go_script = 'rootara_reader.go'
+    rootara_core_path = '/app/database/Rootara.core.202404.gz'
+    go_script = '/app/scripts/rootara_reader.go'
     temp_dir = tempfile.mkdtemp()
     output_file = os.path.join(temp_dir, 'output.rootara.csv')
     cmd = f'go run {go_script} -input {input_data} -output {output_file} -method {source_from} -rootara {rootara_core_path}'
@@ -91,7 +91,10 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     conn.close()
 
     # 将原始数据保存到固定目录中
-    shutil.copy2(input_data, os.path.join('/rootara/rawdata', rawdata_id + '.' + extend_name))
+    rawdata_dir = '/rootara/rawdata'
+    if not os.path.exists(rawdata_dir):
+        os.makedirs(rawdata_dir)
+    shutil.copy2(input_data, os.path.join(rawdata_dir, rawdata_id + '.' + extend_name))
     shutil.rmtree(temp_dir)
     return 201
 

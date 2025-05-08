@@ -477,7 +477,7 @@ func main() {
 	inputPtr := flag.String("input", "", "输入文件路径")
 	outputPtr := flag.String("output", "", "输出文件路径")
 	methodPtr := flag.String("method", "23andme", "文件来源 (23andme/ancestry/wegene)")
-	rootaraPtr := flag.String("rootara", "Rootara.core.202404.txt.gz", "Rootara核心库文件路径")
+	rootaraPtr := flag.String("rootara", "/app/database/Rootara.core.202404.txt.gz", "Rootara核心库文件路径")
 
 	flag.Parse()
 

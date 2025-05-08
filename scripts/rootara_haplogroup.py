@@ -13,7 +13,7 @@ import pandas as pd
 import shutil
 
 def y_haplogroup(vcf_file, output_dir, rpt_id):
-    base_dir = '/home/clinic/clinic_backup/software/haploGrouper'
+    base_dir = '/app/haploGrouper'
     data_dir = f'{base_dir}/data'
     tool = f'{base_dir}/haploGrouper.py'
 
@@ -31,7 +31,7 @@ def y_haplogroup(vcf_file, output_dir, rpt_id):
     os.system(cmd)
 
 def mt_haplogroup(vcf_file, output_dir, rpt_id):
-    base_dir = '/home/clinic/clinic_backup/software/haploGrouper'
+    base_dir = '/app/haploGrouper'
     data_dir = f'{base_dir}/data'
     tool = f'{base_dir}/haploGrouper.py'
 
