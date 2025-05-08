@@ -2,8 +2,9 @@ name: Build and Push Docker Images
 
 on:
   push:
-    paths:
-      - 'dockerfile'
+    branches:
+      - main
+      - master
 
 jobs:
   detect-changes:
@@ -45,7 +46,7 @@ jobs:
 
   build:
     needs: detect-changes
-    if: ${{ github.event_name == 'push' && (contains(github.event.head_commit.modified, 'dockerfile') || needs.detect-changes.outputs.is_version_commit == 'true') }}
+    if: ${{ needs.detect-changes.outputs.is_version_commit == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
