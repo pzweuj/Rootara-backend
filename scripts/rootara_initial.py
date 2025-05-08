@@ -175,7 +175,7 @@ def generate_template_data(name, email, db_path):
     cursor.execute('''
     INSERT INTO users (email, user_id, name, created_at)
     VALUES (?, ?, ?, ?)
-    ''', (email, user_id, name, datetime.now()))
+    ''', (email, user_id, name, datetime.now().isoformat()))
 
     # 创建祖源分析记录
     cursor.execute('''

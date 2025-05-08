@@ -72,7 +72,7 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
         cursor.execute('''
             INSERT INTO reports (report_id, user_id, file_format, data_source, name, select_default, total_snps, upload_date)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (report_id, user_id, 'txt', source_from, report_name, True, total_snp, datetime.now()))
+        ''', (report_id, user_id, 'txt', source_from, report_name, True, total_snp, datetime.now().isoformat()))
 
         # 提交更改并关闭连接
         conn.commit()
@@ -120,7 +120,7 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     cursor.execute('''
         INSERT INTO reports (report_id, user_id, file_format, data_source, name, select_default, total_snps, upload_date)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (report_id, user_id, extend_name, source_from, report_name, default_report, total_snp, datetime.now()))
+    ''', (report_id, user_id, extend_name, source_from, report_name, default_report, total_snp, datetime.now().isoformat()))
 
     # 提交更改并关闭连接
     conn.commit()
