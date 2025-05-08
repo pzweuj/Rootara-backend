@@ -1,3 +1,4 @@
+# Rootara后端
 # 第一阶段：Go构建环境
 FROM golang:1.23-alpine AS go-builder
 WORKDIR /build
