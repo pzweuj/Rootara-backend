@@ -18,6 +18,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
+	"runtime/debug"
 	"strings"
 )
 
@@ -36,7 +38,7 @@ type RootaraRecord struct {
 	Check     string
 }
 
-// 读取rootara核心库
+// 读取rootara核心库 - 优化版本
 func readRootaraCore(filePath string) (map[string]map[string]RootaraRecord, error) {
 	// 打开gzip压缩文件
 	file, err := os.Open(filePath)
@@ -78,6 +80,10 @@ func readRootaraCore(filePath string) (map[string]map[string]RootaraRecord, erro
 
 	// 创建数据结构存储记录，使用染色体和位置作为键
 	records := make(map[string]map[string]RootaraRecord)
+
+	// 设置缓冲区大小，控制内存使用
+	batchSize := 50000
+	batchCount := 0
 
 	// 读取并处理每一行
 	for {
@@ -140,14 +146,23 @@ func readRootaraCore(filePath string) (map[string]map[string]RootaraRecord, erro
 			records[chrom] = make(map[string]RootaraRecord)
 		}
 		records[chrom][start] = record
+
+		// 计数并触发GC
+		batchCount++
+		if batchCount >= batchSize {
+			runtime.GC()
+			batchCount = 0
+		}
 	}
 
 	return records, nil
 }
 
-// 合并数据框架
+// 合并数据框架 - 优化版本
 func mergeDataFrames(inputRecords [][]string, rootaraRecords map[string]map[string]RootaraRecord, colIndex map[string]int) []RootaraRecord {
-	var mergedRecords []RootaraRecord
+	// 预分配合理大小的切片，避免频繁扩容
+	estimatedSize := len(inputRecords) / 10 // 假设约10%的记录会匹配
+	mergedRecords := make([]RootaraRecord, 0, estimatedSize)
 
 	for _, row := range inputRecords {
 		chrom := row[colIndex["Chrom"]]
@@ -161,28 +176,14 @@ func mergeDataFrames(inputRecords [][]string, rootaraRecords map[string]map[stri
 				ref := record.Ref
 				alt := record.Alt
 
-				// 创建所有可能的基因型组合
-				allTypeList := []string{
-					ref + ref,
-					ref + alt,
-					alt + alt,
-					alt + ref,
-				}
+				// 创建所有可能的基因型组合 - 减少内存分配
+				refref := ref + ref
+				refalt := ref + alt
+				altalt := alt + alt
+				altref := alt + ref
 
-				// 去重
-				uniqueTypes := make(map[string]bool)
-				for _, t := range allTypeList {
-					uniqueTypes[t] = true
-				}
-
-				// 检查基因型是否在可能的组合中
-				matched := false
-				for t := range uniqueTypes {
-					if genotype == t {
-						matched = true
-						break
-					}
-				}
+				// 直接比较而不是创建map
+				matched := genotype == refref || genotype == refalt || genotype == altalt || genotype == altref
 
 				if matched && genotype != "--" {
 					// 基因型转换
@@ -197,9 +198,11 @@ func mergeDataFrames(inputRecords [][]string, rootaraRecords map[string]map[stri
 					}
 
 					if check != "NA" {
-						record.Genotype = genotype
-						record.Check = check
-						mergedRecords = append(mergedRecords, record)
+						// 创建新记录而不是修改原记录
+						newRecord := record // 复制结构体
+						newRecord.Genotype = genotype
+						newRecord.Check = check
+						mergedRecords = append(mergedRecords, newRecord)
 					}
 				}
 			}
@@ -209,7 +212,7 @@ func mergeDataFrames(inputRecords [][]string, rootaraRecords map[string]map[stri
 	return mergedRecords
 }
 
-// 读取通用格式结果
+// 读取通用格式结果 - 修复版本
 func readUniResult(filePath string, rootaraRecords map[string]map[string]RootaraRecord) ([]RootaraRecord, error) {
 	// 打开文件
 	file, err := os.Open(filePath)
@@ -218,8 +221,10 @@ func readUniResult(filePath string, rootaraRecords map[string]map[string]Rootara
 	}
 	defer file.Close()
 
-	// 创建扫描器
+	// 创建扫描器，设置更大的缓冲区
+	buffer := make([]byte, 64*1024) // 64KB 缓冲区
 	scanner := bufio.NewScanner(file)
+	scanner.Buffer(buffer, 1024*1024) // 设置最大扫描大小为1MB
 	
 	// 定义列名
 	columns := []string{"RSID", "Chrom", "Start", "Genotype"}
@@ -228,8 +233,14 @@ func readUniResult(filePath string, rootaraRecords map[string]map[string]Rootara
 		colIndex[col] = i
 	}
 
-	// 读取数据
+	// 读取数据 - 分批处理
+	var mergedRecords []RootaraRecord
+	batchSize := 5000
 	var records [][]string
+
+	lineCount := 0
+	totalLineCount := 0  // 新增：跟踪总行数
+	
 	for scanner.Scan() {
 		line := scanner.Text()
 		
@@ -241,15 +252,37 @@ func readUniResult(filePath string, rootaraRecords map[string]map[string]Rootara
 		fields := strings.Split(line, "\t")
 		if len(fields) >= len(columns) {
 			records = append(records, fields)
+			lineCount++
+			totalLineCount++  // 新增：累计总行数
 		}
+
+		// 分批处理
+		if lineCount >= batchSize {
+			batchMerged := mergeDataFrames(records, rootaraRecords, colIndex)
+			mergedRecords = append(mergedRecords, batchMerged...)
+			
+			// 清空临时数组释放内存
+			records = nil
+			records = make([][]string, 0, batchSize)
+			lineCount = 0
+			
+			// 手动触发GC
+			runtime.GC()
+		}
+	}
+
+	// 处理剩余的记录
+	if len(records) > 0 {
+		batchMerged := mergeDataFrames(records, rootaraRecords, colIndex)
+		mergedRecords = append(mergedRecords, batchMerged...)
 	}
 
 	if err := scanner.Err(); err != nil {
 		return nil, fmt.Errorf("读取文件时出错: %v", err)
 	}
 
-	beforeCount := len(records)
-	mergedRecords := mergeDataFrames(records, rootaraRecords, colIndex)
+	// 使用总行数计算
+	beforeCount := totalLineCount  // 修改：使用累计的总行数
 	afterCount := len(mergedRecords)
 
 	transRate := float64(afterCount) / float64(beforeCount) * 100
@@ -260,7 +293,7 @@ func readUniResult(filePath string, rootaraRecords map[string]map[string]Rootara
 	return mergedRecords, nil
 }
 
-// 读取23andme结果
+// 读取23andme结果 - 修复版本
 func read23andmeResult(filePath string, rootaraRecords map[string]map[string]RootaraRecord) ([]RootaraRecord, error) {
 	// 打开文件
 	file, err := os.Open(filePath)
@@ -269,8 +302,10 @@ func read23andmeResult(filePath string, rootaraRecords map[string]map[string]Roo
 	}
 	defer file.Close()
 
-	// 创建扫描器
+	// 创建扫描器，设置更大的缓冲区
+	buffer := make([]byte, 64*1024) // 64KB 缓冲区
 	scanner := bufio.NewScanner(file)
+	scanner.Buffer(buffer, 1024*1024) // 设置最大扫描大小为1MB
 	
 	// 定义列名
 	columns := []string{"RSID", "Chrom", "Start", "Genotype"}
@@ -279,8 +314,14 @@ func read23andmeResult(filePath string, rootaraRecords map[string]map[string]Roo
 		colIndex[col] = i
 	}
 
-	// 读取数据
+	// 读取数据 - 分批处理
+	var mergedRecords []RootaraRecord
+	batchSize := 10000
 	var records [][]string
+
+	lineCount := 0
+	totalLineCount := 0  // 新增：跟踪总行数
+	
 	for scanner.Scan() {
 		line := scanner.Text()
 		
@@ -296,15 +337,37 @@ func read23andmeResult(filePath string, rootaraRecords map[string]map[string]Roo
 				fields[3] = fields[3] + fields[3]
 			}
 			records = append(records, fields)
+			lineCount++
+			totalLineCount++  // 新增：累计总行数
 		}
+
+		// 分批处理
+		if lineCount >= batchSize {
+			batchMerged := mergeDataFrames(records, rootaraRecords, colIndex)
+			mergedRecords = append(mergedRecords, batchMerged...)
+			
+			// 清空临时数组释放内存
+			records = nil
+			records = make([][]string, 0, batchSize)
+			lineCount = 0
+			
+			// 手动触发GC
+			runtime.GC()
+		}
+	}
+
+	// 处理剩余的记录
+	if len(records) > 0 {
+		batchMerged := mergeDataFrames(records, rootaraRecords, colIndex)
+		mergedRecords = append(mergedRecords, batchMerged...)
 	}
 
 	if err := scanner.Err(); err != nil {
 		return nil, fmt.Errorf("读取文件时出错: %v", err)
 	}
 
-	beforeCount := len(records)
-	mergedRecords := mergeDataFrames(records, rootaraRecords, colIndex)
+	// 使用总行数计算
+	beforeCount := totalLineCount  // 修改：使用累计的总行数
 	afterCount := len(mergedRecords)
 
 	transRate := float64(afterCount) / float64(beforeCount) * 100
@@ -478,8 +541,12 @@ func main() {
 	outputPtr := flag.String("output", "", "输出文件路径")
 	methodPtr := flag.String("method", "23andme", "文件来源 (23andme/ancestry/wegene)")
 	rootaraPtr := flag.String("rootara", "/app/database/Rootara.core.202404.txt.gz", "Rootara核心库文件路径")
+	memLimitPtr := flag.Int("memlimit", 200, "内存使用限制(MB)")
 
 	flag.Parse()
+
+	// 设置内存限制
+	debug.SetMemoryLimit(int64(*memLimitPtr) * 1024 * 1024)
 
 	// 检查必需参数
 	if *inputPtr == "" || *outputPtr == "" || *rootaraPtr == "" {
