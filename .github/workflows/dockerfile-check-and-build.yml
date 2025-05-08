@@ -1,0 +1,79 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    paths:
+      - 'dockerfile'
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      is_version_commit: ${{ steps.check_version.outputs.is_version }}
+      version: ${{ steps.check_version.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check if commit message is a version
+        id: check_version
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit Message: $COMMIT_MSG"
+          
+          # 检查提交信息是否符合版本格式（如v1.0.1）
+          if [[ $COMMIT_MSG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "is_version=true" >> $GITHUB_OUTPUT
+            # 提取版本号作为Docker标签
+            echo "version=$COMMIT_MSG" >> $GITHUB_OUTPUT
+            echo "Detected version commit: $COMMIT_MSG"
+          else
+            echo "is_version=false" >> $GITHUB_OUTPUT
+            # 移除特殊字符，只保留字母、数字、点、横杠和下划线
+            FORMATTED_MSG=$(echo "$COMMIT_MSG" | tr ' ' '-' | tr -d '\n' | tr -cd '[:alnum:]-')
+            echo "version=$FORMATTED_MSG" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Debug Output
+        run: |
+          echo "GITHUB_OUTPUT content:"
+          cat $GITHUB_OUTPUT
+          echo "Is version commit: ${{ steps.check_version.outputs.is_version }}"
+          echo "Version: ${{ steps.check_version.outputs.version }}"
+
+  build:
+    needs: detect-changes
+    if: ${{ github.event_name == 'push' && (contains(github.event.head_commit.modified, 'dockerfile') || needs.detect-changes.outputs.is_version_commit == 'true') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      - name: Build and push images
+        run: |
+          # 使用从提交信息中提取的版本
+          VERSION="${{ needs.detect-changes.outputs.version }}"
+          echo "Using version tag: $VERSION"
+          
+          # 检查根目录的Dockerfile
+          if [ -f "dockerfile" ] || [ -f "Dockerfile" ]; then
+            echo "Building and pushing image for root Dockerfile..."
+            DOCKERFILE="dockerfile"
+            if [ -f "Dockerfile" ]; then
+              DOCKERFILE="Dockerfile"
+            fi
+            docker build -t ghcr.io/pzweuj/rootara-backend:$VERSION -t ghcr.io/pzweuj/rootara-backend:latest -f $DOCKERFILE .
+            docker push ghcr.io/pzweuj/rootara-backend:$VERSION
+            docker push ghcr.io/pzweuj/rootara-backend:latest
+          else
+            echo "No Dockerfile found in root directory"
+          fi
