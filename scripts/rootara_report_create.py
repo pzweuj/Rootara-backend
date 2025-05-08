@@ -31,10 +31,10 @@ def generate_random_id():
 # 使用GO脚本进行格式转换
 def format_covert(input_data, source_from):
     rootara_core_path = '/app/database/Rootara.core.202404.gz'
-    go_script = '/app/scripts/rootara_reader.go'
+    go_binary = '/app/scripts/rootara_reader'
     temp_dir = tempfile.mkdtemp()
     output_file = os.path.join(temp_dir, 'output.rootara.csv')
-    cmd = f'go run {go_script} -input {input_data} -output {output_file} -method {source_from} -rootara {rootara_core_path}'
+    cmd = f'{go_binary} -input {input_data} -output {output_file} -method {source_from} -rootara {rootara_core_path}'
     os.system(cmd)
     return output_file
 
