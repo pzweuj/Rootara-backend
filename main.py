@@ -67,14 +67,14 @@ DB_PATH = '/data/rootara.db'
 if not os.path.exists('/data'):
     os.makedirs('/data')
 
-## 初始化数据库
-@app.post("/database/init", response_model=StatusOutput, tags=["database_init"])
-async def api_init_db(input_data: InitDbInput, api_key: str = Depends(verify_api_key)):
-    """
-    Database initial.
-    """
-    init_db(input_data.email, input_data.name, DB_PATH)
-    return StatusOutput(status_code=201)
+# ## 初始化数据库
+# @app.post("/database/init", response_model=StatusOutput, tags=["database_init"])
+# async def api_init_db(input_data: InitDbInput, api_key: str = Depends(verify_api_key)):
+#     """
+#     Database initial.
+#     """
+#     init_db(input_data.email, input_data.name, DB_PATH)
+#     return StatusOutput(status_code=201)
 
 ## 获取用户ID
 @app.post("/user/id", tags=["user_id"])
