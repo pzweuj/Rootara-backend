@@ -160,13 +160,13 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     insert_haplogroup_to_db(report_id, vcf_file, db_path, force=True)
 
     # 原始数据拓展名
-    extend_name = '.txt'
+    extend_name = 'txt'
     if source_from == '23andme':
-        extend_name = '.txt'
+        extend_name = 'txt'
     elif source_from == 'ancestry':
-        extend_name = '.txt'
+        extend_name = 'txt'
     elif source_from == 'wegene':
-        extend_name = '.txt'
+        extend_name = 'txt'
 
     # 将报告信息插入到reports表中
     cursor.execute('''
