@@ -77,13 +77,13 @@ async def api_init_db(input_data: InitDbInput, api_key: str = Depends(verify_api
     return StatusOutput(status_code=201)
 
 ## 获取用户ID
-@app.post("/user/id", response_model=StatusOutput, tags=["user_id"])
+@app.post("/user/id", tags=["user_id"])
 async def api_get_user_id(api_key: str = Depends(verify_api_key)):
     """
     Get user ID.
     """
-    get_user_id(DB_PATH)
-    return StatusOutput(status_code=200)
+    user_id = get_user_id(DB_PATH)
+    return {'status_code': 200, 'user_id': user_id}
 
 # 添加创建报告的请求模型
 class CreateReportInput(BaseModel):
