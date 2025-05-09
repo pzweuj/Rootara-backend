@@ -1,7 +1,7 @@
 # Rootara后端
 # docker run -e ROOTARA_API_KEY="your-actual-secret-key" -p <your_port>:8000 -v <your_path>:/data rootara-backend:latest
 # 第一阶段：Go构建环境
-FROM golang:1.23-alpine AS go-builder
+FROM golang:1.23-bookworm AS go-builder
 WORKDIR /build
 COPY scripts/rootara_reader.go .
 RUN go build -o rootara_reader rootara_reader.go
