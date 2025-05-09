@@ -9,6 +9,8 @@ from pydantic import BaseModel
 from scripts.rootara_initial import init_db                                                          # 初始化数据库
 from scripts.rootara_report_create import create_new_report                                          # 创建新报告
 from scripts.rootara_report_del import delete_report                                                 # 删除报告
+from scripts.rootara_report_set_default import set_default_report                                    # 设置默认报告
+from scripts.rootara_rawdata_export import export_rawdata                                            # 导出原始数据
 from scripts.rootara_reports_info import update_report_name, get_report_info, list_all_report_ids    # 报告信息相关
 from scripts.rootara_table_info import get_snp_info_by_rsid                                          # 位点表信息相关
 from scripts.rootara_get_admixture import get_admixture_info                                         # 查询祖源分析信息
@@ -18,7 +20,7 @@ from scripts.rootara_get_haplogroup import get_haplogroup_info                  
 app = FastAPI(
     title = 'Rootara API',
     description = 'Rootara API',
-    version = '0.2.0'
+    version = '0.2.2'
 )
 
 # 允许请求 || 开发状态
@@ -97,6 +99,32 @@ async def api_create_new_report(input_data: CreateReportInput, api_key: str = De
         False
     )
     return StatusOutput(status_code=201)
+
+# 添加导出原始数据的请求模型
+class ExportRawdataInput(BaseModel):
+    report_id: str
+
+## 导出原始数据
+@app.post("/report/rawdata", response_model=StatusOutput, tags=["report_rawdata"])
+async def api_export_rawdata(input_data: ExportRawdataInput, api_key: str = Depends(verify_api_key)):
+    """
+    Export raw data.
+    """
+    export_rawdata(input_data.report_id, DB_PATH)
+    return StatusOutput(status_code=200)
+
+# 添加设置默认报告的请求模型
+class SetDefaultReportInput(BaseModel):
+    report_id: str
+
+## 设置默认报告
+@app.post("/report/default", response_model=StatusOutput, tags=["report_default"])
+async def api_set_default_report(input_data: SetDefaultReportInput, api_key: str = Depends(verify_api_key)):
+    """
+    Set default report.
+    """
+    set_default_report(input_data.report_id, DB_PATH)
+    return StatusOutput(status_code=200)
 
 # 添加删除报告的请求模型
 class DeleteReportInput(BaseModel):
