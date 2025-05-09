@@ -47,7 +47,16 @@ def format_covert(input_data, source_from):
     temp_dir = tempfile.mkdtemp()
     output_file = os.path.join(temp_dir, 'output.rootara.csv')
     cmd = f'{go_binary} -input {input_data} -output {output_file} -method {source_from} -rootara {rootara_core_path}'
-    os.system(cmd)
+    
+    # 执行命令并检查返回状态
+    exit_code = os.system(cmd)
+    if exit_code != 0:
+        raise Exception(f"格式转换失败，命令返回状态码: {exit_code}")
+    
+    # 检查输出文件是否存在
+    if not os.path.exists(output_file):
+        raise Exception(f"格式转换后的文件不存在: {output_file}")
+        
     return output_file
 
 def create_new_report(user_id, input_data, source_from, report_name, db_path, default_report=False, initail=False):
