@@ -1,4 +1,5 @@
 # Rootara后端
+# docker run -e ROOTARA_API_KEY="your-actual-secret-key" -p <your_port>:8000 -v <your_path>:/data rootara-backend:latest
 # 第一阶段：Go构建环境
 FROM golang:1.23-alpine AS go-builder
 WORKDIR /build
@@ -11,7 +12,8 @@ FROM python:3.13.3-slim-bookworm
 # 设置环境变量
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    DEBIAN_FRONTEND=noninteractive
+    DEBIAN_FRONTEND=noninteractive \
+    ROOTARA_API_KEY="rootara_api_key_default_001"
 
 # 安装运行时依赖
 RUN apt-get update && apt-get install -y --no-install-recommends \

@@ -1,8 +1,9 @@
 # coding=utf-8
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Header
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+# from typing import List, Optional, Dict, Any
 
 # 自定义脚本API
 from scripts.rootara_initial import init_db                                                          # 初始化数据库
@@ -17,8 +18,29 @@ from scripts.rootara_get_haplogroup import get_haplogroup_info                  
 app = FastAPI(
     title = 'Rootara API',
     description = 'Rootara API',
-    version = '0.0.1'
+    version = '0.2.0'
 )
+
+# 允许请求 || 开发状态
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许所有来源，但需要token验证
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 设置API密钥 - 从环境变量读取
+API_KEY = os.environ.get("ROOTARA_API_KEY", "rootara_api_key_default_001")  # 生产环境必须设置环境变量
+
+# 验证API密钥的依赖函数
+async def verify_api_key(x_api_key: str = Header(...)):
+    if x_api_key != API_KEY:
+        raise HTTPException(
+            status_code=401,
+            detail="无效的API密钥"
+        )
+    return x_api_key
 
 # 定义请求与响应类型
 class ReportIdInput(BaseModel):
@@ -44,7 +66,7 @@ if not os.path.exists('/data'):
 
 ## 初始化数据库
 @app.post("/database/init", response_model=StatusOutput, tags=["database_init"])
-async def api_init_db(input_data: InitDbInput):
+async def api_init_db(input_data: InitDbInput, api_key: str = Depends(verify_api_key)):
     """
     Database initial.
     """
@@ -61,7 +83,7 @@ class CreateReportInput(BaseModel):
 
 ## 创建报告
 @app.post("/report/create", response_model=StatusOutput, tags=["report_create"])
-async def api_create_new_report(input_data: CreateReportInput):
+async def api_create_new_report(input_data: CreateReportInput, api_key: str = Depends(verify_api_key)):
     """
     Create a new report.
     """
@@ -82,7 +104,7 @@ class DeleteReportInput(BaseModel):
 
 ## 删除报告
 @app.post("/report/delete", response_model=StatusOutput, tags=["report_delete"])
-async def api_delete_report(input_data: DeleteReportInput):
+async def api_delete_report(input_data: DeleteReportInput, api_key: str = Depends(verify_api_key)):
     """
     Delete a report.
     """
@@ -96,16 +118,16 @@ class RenameReportInput(BaseModel):
 
 ## 更新报告自定义名称
 @app.post("/report/rename", response_model=StatusOutput, tags=["report_rename"])
-async def api_update_report_name(input_data: RenameReportInput):
+async def api_update_report_name(input_data: RenameReportInput, api_key: str = Depends(verify_api_key)):
     """
     Rename a report.
     """
     update_report_name(input_data.report_id, input_data.new_name, DB_PATH)
     return StatusOutput(status_code=200)
 
-## 查询报告信息
-@app.get("/report/{report_id}/info", tags=["report_info"])
-async def api_get_report_info(report_id: str):
+## 查询报告信息 - 从GET改为POST
+@app.post("/report/{report_id}/info", tags=["report_info"])
+async def api_get_report_info(report_id: str, api_key: str = Depends(verify_api_key)):
     """
     Get report info.
     """
@@ -115,9 +137,9 @@ async def api_get_report_info(report_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"查询报告信息失败: {str(e)}")
 
-## 列出所有的报告ID
-@app.get("/report/list", tags=["report_list"])
-async def api_list_all_report_ids():
+## 列出所有的报告ID - 从GET改为POST
+@app.post("/report/list", tags=["report_list"])
+async def api_list_all_report_ids(api_key: str = Depends(verify_api_key)):
     """
     List all reports.
     """
@@ -127,9 +149,33 @@ async def api_list_all_report_ids():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"获取报告列表失败: {str(e)}")
 
+## 查询祖源分析结果 - 从GET改为POST
+@app.post("/report/{report_id}/admixture", tags=["admixture_info"])
+async def api_get_admixture_info(report_id: str, api_key: str = Depends(verify_api_key)):
+    """
+    Admixture query.
+    """
+    try:
+        result = get_admixture_info(report_id, DB_PATH)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"查询祖源分析结果失败: {str(e)}")
+
+## 查询单倍群结果 - 从GET改为POST
+@app.post("/report/{report_id}/haplogroup", tags=["haplogroup_info"])
+async def api_get_haplogroup_info(report_id: str, api_key: str = Depends(verify_api_key)):
+    """
+    Haplogroup query.
+    """
+    try:
+        result = get_haplogroup_info(report_id, DB_PATH)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"查询单倍群结果失败: {str(e)}")
+
 ## 查询位点信息
 @app.post("/variant/rsid", tags=["variant_rsid"])
-async def api_get_snp_info_by_rsid(input_data: RsidInput):
+async def api_get_snp_info_by_rsid(input_data: RsidInput, api_key: str = Depends(verify_api_key)):
     """
     RSID query.
     """
@@ -141,7 +187,7 @@ async def api_get_snp_info_by_rsid(input_data: RsidInput):
 
 ## 查询祖源分析结果
 @app.get("/report/{report_id}/admixture", tags=["admixture_info"])
-async def api_get_admixture_info(report_id: str):
+async def api_get_admixture_info(report_id: str, api_key: str = Depends(verify_api_key)):
     """
     Admixture query.
     """
@@ -153,7 +199,7 @@ async def api_get_admixture_info(report_id: str):
 
 ## 查询单倍群结果
 @app.get("/report/{report_id}/haplogroup", tags=["haplogroup_info"])
-async def api_get_haplogroup_info(report_id: str):
+async def api_get_haplogroup_info(report_id: str, api_key: str = Depends(verify_api_key)):
     """
     Haplogroup query.
     """
