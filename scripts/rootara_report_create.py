@@ -174,6 +174,10 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', (report_id, user_id, extend_name, source_from, report_name, default_report, total_snp, datetime.now().isoformat()))
 
+    if default_report:
+        # 如果设置为默认报告，则将其他报告的select_default设置为False
+        cursor.execute('UPDATE reports SET select_default = 0 WHERE user_id = ? AND report_id != ?', (user_id, report_id))
+
     # 提交更改并关闭连接
     conn.commit()
     conn.close()
