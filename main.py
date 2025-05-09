@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 # 自定义脚本API
 from scripts.rootara_initial import init_db                                                          # 初始化数据库
+from scripts.rootara_get_user_id import get_user_id                                                  # 获取用户ID
 from scripts.rootara_report_create import create_new_report                                          # 创建新报告
 from scripts.rootara_report_del import delete_report                                                 # 删除报告
 from scripts.rootara_report_set_default import set_default_report                                    # 设置默认报告
@@ -20,7 +21,7 @@ from scripts.rootara_get_haplogroup import get_haplogroup_info                  
 app = FastAPI(
     title = 'Rootara API',
     description = 'Rootara API',
-    version = '0.2.2'
+    version = '0.2.5'
 )
 
 # 允许请求 || 开发状态
@@ -74,6 +75,15 @@ async def api_init_db(input_data: InitDbInput, api_key: str = Depends(verify_api
     """
     init_db(input_data.email, input_data.name, DB_PATH)
     return StatusOutput(status_code=201)
+
+## 获取用户ID
+@app.post("/user/id", response_model=StatusOutput, tags=["user_id"])
+async def api_get_user_id(api_key: str = Depends(verify_api_key)):
+    """
+    Get user ID.
+    """
+    get_user_id(DB_PATH)
+    return StatusOutput(status_code=200)
 
 # 添加创建报告的请求模型
 class CreateReportInput(BaseModel):
