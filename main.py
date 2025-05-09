@@ -185,30 +185,6 @@ async def api_get_snp_info_by_rsid(input_data: RsidInput, api_key: str = Depends
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"查询位点信息失败: {str(e)}")
 
-## 查询祖源分析结果
-@app.get("/report/{report_id}/admixture", tags=["admixture_info"])
-async def api_get_admixture_info(report_id: str, api_key: str = Depends(verify_api_key)):
-    """
-    Admixture query.
-    """
-    try:
-        result = get_admixture_info(report_id, DB_PATH)
-        return result
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"查询祖源分析结果失败: {str(e)}")
-
-## 查询单倍群结果
-@app.get("/report/{report_id}/haplogroup", tags=["haplogroup_info"])
-async def api_get_haplogroup_info(report_id: str, api_key: str = Depends(verify_api_key)):
-    """
-    Haplogroup query.
-    """
-    try:
-        result = get_haplogroup_info(report_id, DB_PATH)
-        return result
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"查询单倍群结果失败: {str(e)}")
-
 # --- 运行应用 (通常在命令行中做，这里用于测试) ---
 if __name__ == "__main__":
     import uvicorn
