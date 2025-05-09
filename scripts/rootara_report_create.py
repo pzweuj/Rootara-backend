@@ -140,7 +140,18 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     total_snp = cursor.fetchone()[0]
 
     # 祖源分析
-    admix_data_to_sqlite(input_data, report_id, source_from, db_path, force=True)
+    # 检查input_data是否为文件路径
+    adm_temp_dir = tempfile.mkdtemp()
+    if os.path.exists(input_data) and os.path.isfile(input_data):
+        # 如果是文件路径，直接传递
+        admix_data_to_sqlite(input_data, report_id, source_from, db_path, force=True)
+    else:
+        # 如果是文件内容，创建临时文件
+        temp_admix_file = os.path.join(adm_temp_dir, f'input_for_admix.{source_from}.txt')
+        with open(temp_admix_file, 'w', encoding='utf-8') as f:
+            f.write(input_data)
+        admix_data_to_sqlite(temp_admix_file, report_id, source_from, db_path, force=True)
+    shutil.rmtree(adm_temp_dir)
 
     # 单倍群分析
     temp_dir = os.path.dirname(rootara_csv)
@@ -149,7 +160,13 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     insert_haplogroup_to_db(report_id, vcf_file, db_path, force=True)
 
     # 原始数据拓展名
-    extend_name = os.path.splitext(input_data)[1]
+    extend_name = '.txt'
+    if source_from == '23andme':
+        extend_name = '.txt'
+    elif source_from == 'ancestry':
+        extend_name = '.txt'
+    elif source_from == 'wegene':
+        extend_name = '.txt'
 
     # 将报告信息插入到reports表中
     cursor.execute('''
@@ -176,7 +193,8 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
         with open(raw_file_path, 'w', encoding='utf-8') as f:
             f.write(input_data)
     
-    shutil.rmtree(temp_dir)
+    if os.path.exists(temp_dir):
+        shutil.rmtree(temp_dir)
 
 def main():
     parser = argparse.ArgumentParser(description='创建新的报告')
