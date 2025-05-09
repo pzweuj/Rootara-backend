@@ -12,6 +12,7 @@ import shutil
 import sys
 from datetime import datetime
 import argparse
+import subprocess
 
 # 根据脚本运行方式选择合适的导入路径
 if __name__ == "__main__":
@@ -45,19 +46,44 @@ def format_covert(input_data, source_from):
     rootara_core_path = '/app/database/Rootara.core.202404.txt.gz'
     go_binary = '/app/scripts/rootara_reader'
     temp_dir = tempfile.mkdtemp()
+    
+    # 检查是否是文件路径还是文件内容
+    if os.path.exists(input_data) and os.path.isfile(input_data):
+        # 如果是文件路径，直接使用
+        input_file_path = input_data
+    else:
+        # 如果是文件内容，创建临时文件
+        input_file_path = os.path.join(temp_dir, f'input.{source_from}.txt')
+        with open(input_file_path, 'w', encoding='utf-8') as f:
+            f.write(input_data)
+    
     output_file = os.path.join(temp_dir, 'output.rootara.csv')
-    cmd = f'{go_binary} -input {input_data} -output {output_file} -method {source_from} -rootara {rootara_core_path}'
     
-    # 执行命令并检查返回状态
-    exit_code = os.system(cmd)
-    if exit_code != 0:
-        raise Exception(f"格式转换失败，命令返回状态码: {exit_code}")
+    # 检查文件是否存在
+    if not os.path.exists(go_binary):
+        raise Exception(f"Go二进制文件不存在: {go_binary}")
+    if not os.path.exists(rootara_core_path):
+        raise Exception(f"核心数据文件不存在: {rootara_core_path}")
     
-    # 检查输出文件是否存在
-    if not os.path.exists(output_file):
-        raise Exception(f"格式转换后的文件不存在: {output_file}")
+    try:
+        # 使用subprocess.run代替os.system
+        cmd = [go_binary, '-input', input_file_path, '-output', output_file, 
+               '-method', source_from, '-rootara', rootara_core_path]
         
-    return output_file
+        # 执行命令
+        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        
+        if result.returncode != 0:
+            raise Exception(f"格式转换失败，命令返回状态码: {result.returncode}，" +
+                          f"标准输出: {result.stdout}，错误输出: {result.stderr}")
+        
+        # 检查输出文件是否存在
+        if not os.path.exists(output_file):
+            raise Exception(f"格式转换后的文件不存在: {output_file}")
+            
+        return output_file
+    except Exception as e:
+        raise Exception(f"执行Go程序时出错: {str(e)}")
 
 def create_new_report(user_id, input_data, source_from, report_name, db_path, default_report=False, initail=False):
     # 当在初始化模式下，创建新的报告时，需要将default_report设置为True
@@ -139,7 +165,17 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     rawdata_dir = '/data/rawdata'
     if not os.path.exists(rawdata_dir):
         os.makedirs(rawdata_dir, exist_ok=True)
-    shutil.copy2(input_data, os.path.join(rawdata_dir, rawdata_id + '.' + source_from + '.' + extend_name))
+    
+    # 检查input_data是否为文件路径
+    if os.path.exists(input_data) and os.path.isfile(input_data):
+        # 如果是文件路径，直接复制
+        shutil.copy2(input_data, os.path.join(rawdata_dir, rawdata_id + '.' + source_from + '.' + extend_name))
+    else:
+        # 如果是文件内容，创建一个新文件
+        raw_file_path = os.path.join(rawdata_dir, rawdata_id + '.' + source_from + '.' + extend_name)
+        with open(raw_file_path, 'w', encoding='utf-8') as f:
+            f.write(input_data)
+    
     shutil.rmtree(temp_dir)
 
 def main():
