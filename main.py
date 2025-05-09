@@ -1,6 +1,6 @@
 # coding=utf-8
 import os
-from fastapi import FastAPI, HTTPException, Depends, Header
+from fastapi import FastAPI, HTTPException, Depends, Header, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 # from typing import List, Optional, Dict, Any
@@ -12,7 +12,7 @@ from scripts.rootara_report_create import create_new_report                     
 from scripts.rootara_report_del import delete_report                                                 # 删除报告
 from scripts.rootara_report_set_default import set_default_report                                    # 设置默认报告
 from scripts.rootara_rawdata_export import export_rawdata                                            # 导出原始数据
-from scripts.rootara_reports_info import update_report_name, get_report_info, list_all_report_ids    # 报告信息相关
+from scripts.rootara_reports_info import *                                                           # 报告信息相关
 from scripts.rootara_table_info import get_snp_info_by_rsid                                          # 位点表信息相关
 from scripts.rootara_get_admixture import get_admixture_info                                         # 查询祖源分析信息
 from scripts.rootara_get_haplogroup import get_haplogroup_info                                       # 查询单倍群分析信息
@@ -110,18 +110,25 @@ async def api_create_new_report(input_data: CreateReportInput, api_key: str = De
     )
     return StatusOutput(status_code=201)
 
-# 添加导出原始数据的请求模型
-class ExportRawdataInput(BaseModel):
-    report_id: str
-
 ## 导出原始数据
-@app.post("/report/rawdata", response_model=StatusOutput, tags=["report_rawdata"])
-async def api_export_rawdata(input_data: ExportRawdataInput, api_key: str = Depends(verify_api_key)):
+@app.post("/report/{report_id}/rawdata", tags=["report_rawdata"])
+async def api_export_rawdata(report_id: str, api_key: str = Depends(verify_api_key)):
     """
     Export raw data.
     """
-    export_rawdata(input_data.report_id, DB_PATH)
-    return StatusOutput(status_code=200)
+    filename, file_content = export_rawdata(report_id)
+    
+    if filename is None or file_content is None:
+        raise HTTPException(status_code=404, detail="原始数据文件不存在或无法读取")
+    
+    # 返回文件内容作为响应
+    return Response(
+        content=file_content,
+        media_type="text/plain",
+        headers={
+            "Content-Disposition": f"attachment; filename={filename}"
+        }
+    )
 
 # 添加设置默认报告的请求模型
 class SetDefaultReportInput(BaseModel):
@@ -176,13 +183,25 @@ async def api_get_report_info(report_id: str, api_key: str = Depends(verify_api_
         raise HTTPException(status_code=500, detail=f"查询报告信息失败: {str(e)}")
 
 ## 列出所有的报告ID - 从GET改为POST
-@app.post("/report/list", tags=["report_list"])
+@app.post("/report/id", tags=["report_id"])
 async def api_list_all_report_ids(api_key: str = Depends(verify_api_key)):
+    """
+    List all reports ID.
+    """
+    try:
+        result = list_all_report_ids(DB_PATH)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取报告列表失败: {str(e)}")
+
+## 列出所有的报告
+@app.post("/report/all", tags=["report_all"])
+async def api_get_all_report_info(api_key: str = Depends(verify_api_key)):
     """
     List all reports.
     """
     try:
-        result = list_all_report_ids(DB_PATH)
+        result = get_all_report_info(DB_PATH)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"获取报告列表失败: {str(e)}")

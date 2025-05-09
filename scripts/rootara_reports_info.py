@@ -29,3 +29,19 @@ def list_all_report_ids(db_file):
     report_ids = cursor.fetchall()
     conn.close()
     return [report_id[0] for report_id in report_ids]
+
+# 所有的报告信息 || 现在没有区分用户，所以不需要用户ID
+def get_all_report_info(db_file):
+    conn = sqlite3.connect(db_file)
+    cursor = conn.cursor()
+
+    # 当报告的数目≥2，不需要显示默认报告RPT_TEMPLATE01
+    cursor.execute("SELECT COUNT(*) FROM reports")
+    report_count = cursor.fetchone()[0]
+    if report_count >= 2:
+        cursor.execute("SELECT * FROM reports WHERE report_id != 'RPT_TEMPLATE01'")
+    else:
+        cursor.execute("SELECT * FROM reports")
+    report_info = cursor.fetchall()
+    conn.close()
+    return report_info
