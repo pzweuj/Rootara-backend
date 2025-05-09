@@ -130,7 +130,7 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
     rawdata_dir = '/data/rawdata'
     if not os.path.exists(rawdata_dir):
         os.makedirs(rawdata_dir, exist_ok=True)
-    shutil.copy2(input_data, os.path.join(rawdata_dir, rawdata_id + '.' + extend_name))
+    shutil.copy2(input_data, os.path.join(rawdata_dir, rawdata_id + '.' + source_from + '.' + extend_name))
     shutil.rmtree(temp_dir)
 
 def main():
