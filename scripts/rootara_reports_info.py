@@ -44,4 +44,18 @@ def get_all_report_info(db_file):
         cursor.execute("SELECT * FROM reports")
     report_info = cursor.fetchall()
     conn.close()
-    return report_info
+
+    sample_info_json = []
+    for i in report_info:
+        report_dict = {}
+        report_dict['id'] = i[0]
+        report_dict['user_id'] = i[1]
+        report_dict['extend'] = i[2]
+        report_dict['source'] = i[3]
+        report_dict['name'] = i[4]
+        report_dict['nameZh'] = i[4]
+        report_dict['isDefault'] = i[5]
+        report_dict['snpCount'] = i[6]
+        report_dict['uploadDate'] = i[7]
+        sample_info_json.append(report_dict)
+    return sample_info_json
