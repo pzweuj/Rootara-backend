@@ -130,17 +130,13 @@ async def api_export_rawdata(report_id: str, api_key: str = Depends(verify_api_k
         }
     )
 
-# 添加设置默认报告的请求模型
-class SetDefaultReportInput(BaseModel):
-    report_id: str
-
 ## 设置默认报告
 @app.post("/report/default", response_model=StatusOutput, tags=["report_default"])
-async def api_set_default_report(input_data: SetDefaultReportInput, api_key: str = Depends(verify_api_key)):
+async def api_set_default_report(report_id: str, api_key: str = Depends(verify_api_key)):
     """
     Set default report.
     """
-    set_default_report(input_data.report_id, DB_PATH)
+    set_default_report(report_id, DB_PATH)
     return StatusOutput(status_code=200)
 
 # 添加删除报告的请求模型
@@ -156,18 +152,13 @@ async def api_delete_report(input_data: DeleteReportInput, api_key: str = Depend
     delete_report(input_data.report_id, DB_PATH)
     return StatusOutput(status_code=200)
 
-# 添加更新报告名称的请求模型
-class RenameReportInput(BaseModel):
-    report_id: str
-    new_name: str
-
 ## 更新报告自定义名称
 @app.post("/report/rename", response_model=StatusOutput, tags=["report_rename"])
-async def api_update_report_name(input_data: RenameReportInput, api_key: str = Depends(verify_api_key)):
+async def api_update_report_name(report_id: str, new_name: str, api_key: str = Depends(verify_api_key)):
     """
     Rename a report.
     """
-    update_report_name(input_data.report_id, input_data.new_name, DB_PATH)
+    update_report_name(report_id, new_name, DB_PATH)
     return StatusOutput(status_code=200)
 
 ## 查询报告信息 - 从GET改为POST
@@ -242,7 +233,40 @@ async def api_get_snp_info_by_rsid(input_data: RsidInput, api_key: str = Depends
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"查询位点信息失败: {str(e)}")
 
+# 添加表格数据查询的请求模型
+class TableQueryInput(BaseModel):
+    report_id: str
+    page_size: int = 1000
+    page: int = 1
+    sort_by: str = ""  # 修改为空字符串，而不是 None
+    sort_order: str = "asc"
+    search_term: str = ""  # 同样修改为空字符串
+    filters: dict = {}
+
+## 查询表格数据
+@app.post("/report/table", tags=["report_table"])
+async def api_get_table_data(input_data: TableQueryInput, api_key: str = Depends(verify_api_key)):
+    """
+    查询报告表格数据，支持分页、排序、搜索和筛选。
+    """
+    try:
+        from scripts.rootara_table_info import get_all_snp_info
+        result = get_all_snp_info(
+            input_data.report_id,
+            DB_PATH,
+            input_data.page_size,
+            input_data.page,
+            input_data.sort_by,
+            input_data.sort_order,
+            input_data.search_term,
+            input_data.filters
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"查询表格数据失败: {str(e)}")
+
 # --- 运行应用 (通常在命令行中做，这里用于测试) ---
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+

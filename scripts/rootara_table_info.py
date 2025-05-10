@@ -131,8 +131,18 @@ def get_snp_info_by_chromosome_position_ref_alt(query_list, report_id, db_path):
     conn.close()
     return result_dict
 
-# 整张表的信息输出，表格很大，使用懒惰加载方式处理 || 看看能否通过前端实现，不一定要用这个函数
-def get_all_snp_info(report_id, db_path, page_size=1000, page=1):
+# 整张表的信息输出，表格很大，使用懒惰加载方式处理，支持前端表格展示、搜索和筛选
+def get_all_snp_info(report_id, db_path, page_size=1000, page=1, sort_by="", sort_order='asc', 
+                     search_term="", filters={}):
+    
+    # 在函数内部添加检查
+    if sort_by == "":
+        sort_by = None
+    if search_term == "":
+        search_term = None
+    if filters == {}:
+        filters = None
+    
     # 连接到数据库
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -141,26 +151,89 @@ def get_all_snp_info(report_id, db_path, page_size=1000, page=1):
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (report_id,))
     if not cursor.fetchone():
         # 表不存在时返回空结果
-        empty_result = {}
+        empty_result = {
+            "data": {},
+            "columns": [],
+            "pagination": {
+                "total": 0,
+                "page": page,
+                "page_size": page_size,
+                "total_pages": 0
+            }
+        }
         conn.close()
         return empty_result
-
-    # 计算总记录数
-    cursor.execute(f"SELECT COUNT(*) FROM {report_id}")
+    
+    # 获取表的列信息
+    cursor.execute(f"PRAGMA table_info({report_id})")
+    columns_info = cursor.fetchall()
+    columns = [col[1] for col in columns_info]
+    
+    # 构建基本查询
+    base_query = f"FROM {report_id}"
+    count_query = f"SELECT COUNT(*) {base_query}"
+    data_query = f"SELECT * {base_query}"
+    
+    # 构建WHERE子句
+    where_clauses = []
+    query_params = []
+    
+    # 添加搜索条件
+    if search_term:
+        search_conditions = []
+        for col in columns:
+            search_conditions.append(f"{col} LIKE ?")
+            query_params.append(f"%{search_term}%")
+        
+        if search_conditions:
+            where_clauses.append(f"({' OR '.join(search_conditions)})")
+    
+    # 添加筛选条件
+    if filters and isinstance(filters, dict):
+        for col, value in filters.items():
+            if col in columns:
+                if isinstance(value, list):
+                    # 处理多选筛选
+                    placeholders = ', '.join(['?'] * len(value))
+                    where_clauses.append(f"{col} IN ({placeholders})")
+                    query_params.extend(value)
+                else:
+                    # 处理单值筛选
+                    where_clauses.append(f"{col} = ?")
+                    query_params.append(value)
+    
+    # 组合WHERE子句
+    if where_clauses:
+        where_clause = " WHERE " + " AND ".join(where_clauses)
+        count_query += where_clause
+        data_query += where_clause
+    
+    # 添加排序
+    if sort_by and sort_by in columns:
+        sort_direction = "DESC" if sort_order.lower() == 'desc' else "ASC"
+        data_query += f" ORDER BY {sort_by} {sort_direction}"
+    
+    # 计算总记录数（考虑筛选条件）
+    cursor.execute(count_query, query_params)
     total_count = cursor.fetchone()[0]
     
     # 计算偏移量
     offset = (page - 1) * page_size
     
-    # 分页查询数据
-    cursor.execute(f"SELECT * FROM {report_id} LIMIT ? OFFSET ?", (page_size, offset))
+    # 添加分页
+    data_query += " LIMIT ? OFFSET ?"
+    query_params.extend([page_size, offset])
+    
+    # 执行查询
+    cursor.execute(data_query, query_params)
     
     # 获取列名
     column_names = [description[0] for description in cursor.description]
     
-    # 使用字典推导式直接构建结果字典
+    # 构建结果字典
     result = {
         "data": {},
+        "columns": column_names,
         "pagination": {
             "total": total_count,
             "page": page,
