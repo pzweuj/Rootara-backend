@@ -61,7 +61,14 @@ def insert_haplogroup_to_db(rpt_id, vcf_file, db_file, force=False):
         print(f"报告 {rpt_id} 已存在结果，跳过分析。")
         return
 
-    running_dir = tempfile.gettempdir()
+    # 创建一个固定的临时目录
+    temp_base_dir = '/data/temp'
+    if not os.path.exists(temp_base_dir):
+        os.makedirs(temp_base_dir, exist_ok=True)
+    
+    # 使用固定目录创建临时目录
+    running_dir = tempfile.mkdtemp(dir=temp_base_dir)
+    
     y_haplogroup(vcf_file, running_dir, rpt_id)
     mt_haplogroup(vcf_file, running_dir, rpt_id)
     y_haplogroup_result = f"{running_dir}/{rpt_id}.YHap.txt"

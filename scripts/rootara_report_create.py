@@ -45,7 +45,14 @@ def generate_random_id():
 def format_covert(input_data, source_from):
     rootara_core_path = '/app/database/Rootara.core.202404.txt.gz'
     go_binary = '/app/scripts/rootara_reader'
-    temp_dir = tempfile.mkdtemp()
+    
+    # 创建一个固定的临时目录
+    temp_base_dir = '/data/temp'
+    if not os.path.exists(temp_base_dir):
+        os.makedirs(temp_base_dir, exist_ok=True)
+    
+    # 使用固定目录创建临时目录
+    temp_dir = tempfile.mkdtemp(dir=temp_base_dir)
     
     # 检查是否是文件路径还是文件内容
     if os.path.exists(input_data) and os.path.isfile(input_data):
@@ -141,7 +148,12 @@ def create_new_report(user_id, input_data, source_from, report_name, db_path, de
 
     # 祖源分析
     # 检查input_data是否为文件路径
-    adm_temp_dir = tempfile.mkdtemp()
+    # 祖源分析
+    # 检查input_data是否为文件路径
+    temp_base_dir = '/data/temp'
+    if not os.path.exists(temp_base_dir):
+        os.makedirs(temp_base_dir, exist_ok=True)
+    adm_temp_dir = tempfile.mkdtemp(dir=temp_base_dir)
     if os.path.exists(input_data) and os.path.isfile(input_data):
         # 如果是文件路径，直接传递
         admix_data_to_sqlite(input_data, report_id, source_from, db_path, force=True)

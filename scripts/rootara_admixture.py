@@ -4,7 +4,6 @@
 # 用于从原始输入数据中进行祖源分析
 # 使用 https://github.com/stevenliuyi/admix
 # 模型参考 https://dnagenics.com/products/admixturecalculators
-# 使用LM K47
 
 import os
 import tempfile
@@ -15,7 +14,15 @@ import shutil
 # admix运行，可能会占用较高的计算资源
 def admix_cli(input_file, rpt_id, method):
     input_file = os.path.abspath(input_file)
-    temp_dir = tempfile.mkdtemp()
+    
+    # 创建一个固定的临时目录
+    temp_base_dir = '/data/temp'
+    if not os.path.exists(temp_base_dir):
+        os.makedirs(temp_base_dir, exist_ok=True)
+    
+    # 使用固定目录创建临时目录
+    temp_dir = tempfile.mkdtemp(dir=temp_base_dir)
+    
     cmd = f'admix -f {input_file} -v {method} -m K47 > {temp_dir}/{rpt_id}.admix.txt'
     os.system(cmd)
     return f'{temp_dir}/{rpt_id}.admix.txt'
