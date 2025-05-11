@@ -139,13 +139,9 @@ async def api_set_default_report(report_id: str, api_key: str = Depends(verify_a
     set_default_report(report_id, DB_PATH)
     return StatusOutput(status_code=200)
 
-# 添加删除报告的请求模型
-class DeleteReportInput(BaseModel):
-    report_id: str
-
 ## 删除报告
 @app.post("/report/delete", response_model=StatusOutput, tags=["report_delete"])
-async def api_delete_report(input_data: DeleteReportInput, api_key: str = Depends(verify_api_key)):
+async def api_delete_report(input_data: ReportIdInput, api_key: str = Depends(verify_api_key)):
     """
     Delete a report.
     """

@@ -6,8 +6,11 @@
 
 import sqlite3
 import argparse
+import sys
 
-def delete_report(db_file, report_id):
+def delete_report(report_id, db_file):
+    print("删除报告：{report_id}".format(report_id=report_id))
+
     if report_id == 'RPT_TEMPLATE01':
         print("模板报告不能删除")
         return
@@ -15,14 +18,14 @@ def delete_report(db_file, report_id):
     conn = sqlite3.connect(db_file)
     cursor = conn.cursor()
 
-    # 删除报告表
-    cursor.execute("DROP TABLE IF EXISTS {}".format(report_id))
+    # 删除报告表 - 使用引用标识符语法
+    cursor.execute("DROP TABLE IF EXISTS [{}]".format(report_id))
 
     # 删除admixture表记录
     cursor.execute("DELETE FROM admixture WHERE report_id = ?", (report_id,))
 
     # 删除单倍群表记录
-    cursor.execute("DELETE FROM hapogroup WHERE report_id =?", (report_id,))
+    cursor.execute("DELETE FROM haplogroup WHERE report_id =?", (report_id,))
 
     # 删除报告记录
     # 首先先查看这个报告是不是默认报告
