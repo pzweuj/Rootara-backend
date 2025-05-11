@@ -245,7 +245,7 @@ def get_all_snp_info(report_id, db_path, page_size=1000, page=1, sort_by="", sor
     # 使用迭代器处理查询结果，避免一次性加载所有数据到内存
     for row in cursor:
         snp_dict = dict(zip(column_names, row))
-        result["data"][snp_dict['id']] = snp_dict
+        result["data"][snp_dict['rsid']] = snp_dict
     
     # 关闭数据库连接
     conn.close()
