@@ -178,12 +178,12 @@ def get_all_snp_info(report_id, db_path, page_size=1000, page=1, sort_by="", sor
     where_clauses = []
     query_params = []
     
-    # 添加搜索条件
+    # 添加搜索条件 - 修改为完美匹配
     if search_term:
         search_conditions = []
         for col in columns:
-            search_conditions.append(f"{col} LIKE ?")
-            query_params.append(f"%{search_term}%")
+            search_conditions.append(f"{col} = ?")  # 使用等号而不是LIKE进行完美匹配
+            query_params.append(search_term)  # 不再添加%通配符
         
         if search_conditions:
             where_clauses.append(f"({' OR '.join(search_conditions)})")
