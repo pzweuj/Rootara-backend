@@ -6,14 +6,13 @@ from pydantic import BaseModel
 # from typing import List, Optional, Dict, Any
 
 # 自定义脚本API
-from scripts.rootara_initial import init_db                                                          # 初始化数据库
 from scripts.rootara_get_user_id import get_user_id                                                  # 获取用户ID
 from scripts.rootara_report_create import create_new_report                                          # 创建新报告
 from scripts.rootara_report_del import delete_report                                                 # 删除报告
 from scripts.rootara_report_set_default import set_default_report                                    # 设置默认报告
 from scripts.rootara_rawdata_export import export_rawdata                                            # 导出原始数据
 from scripts.rootara_reports_info import *                                                           # 报告信息相关
-from scripts.rootara_table_info import get_snp_info_by_rsid                                          # 位点表信息相关
+from scripts.rootara_table_info import get_snp_info_by_rsid, get_clinvar_data                        # 位点表信息相关
 from scripts.rootara_get_admixture import get_admixture_info                                         # 查询祖源分析信息
 from scripts.rootara_get_haplogroup import get_haplogroup_info                                       # 查询单倍群分析信息
 
@@ -261,8 +260,41 @@ async def api_get_table_data(input_data: TableQueryInput, api_key: str = Depends
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"查询表格数据失败: {str(e)}")
 
+# 添加ClinVar数据查询的请求模型
+class ClinvarQueryInput(BaseModel):
+    report_id: str
+    page_size: int = 1000
+    page: int = 1
+    sort_by: str = ""  # 默认为空字符串
+    sort_order: str = "asc"
+    search_term: str = ""  # 默认为空字符串
+    filters: dict = {}
+    indel: bool = False  # 是否包含插入删除变异
+
+## 查询ClinVar数据
+@app.post("/report/clinvar", tags=["report_clinvar"])
+async def api_get_clinvar_data(input_data: ClinvarQueryInput, api_key: str = Depends(verify_api_key)):
+    """
+    查询报告中的ClinVar数据，支持分页、排序、搜索和筛选。
+    返回结果包含致病性分类统计信息。
+    """
+    try:
+        result = get_clinvar_data(
+            input_data.report_id,
+            DB_PATH,
+            input_data.page_size,
+            input_data.page,
+            input_data.sort_by,
+            input_data.sort_order,
+            input_data.search_term,
+            input_data.filters,
+            input_data.indel
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"查询ClinVar数据失败: {str(e)}")
+
 # --- 运行应用 (通常在命令行中做，这里用于测试) ---
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
