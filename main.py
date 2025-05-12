@@ -263,8 +263,6 @@ async def api_get_table_data(input_data: TableQueryInput, api_key: str = Depends
 # 添加ClinVar数据查询的请求模型
 class ClinvarQueryInput(BaseModel):
     report_id: str
-    page_size: int = 1000
-    page: int = 1
     sort_by: str = ""  # 默认为空字符串
     sort_order: str = "asc"
     search_term: str = ""  # 默认为空字符串
@@ -282,8 +280,6 @@ async def api_get_clinvar_data(input_data: ClinvarQueryInput, api_key: str = Dep
         result = get_clinvar_data(
             input_data.report_id,
             DB_PATH,
-            input_data.page_size,
-            input_data.page,
             input_data.sort_by,
             input_data.sort_order,
             input_data.search_term,
