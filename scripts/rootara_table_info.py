@@ -301,6 +301,9 @@ def get_clinvar_data(report_id, db_path, page_size=1000, page=1, sort_by="", sor
     base_conditions = []
     base_params = []
     
+    # 基础条件：gt不是. 和 null 还有WT
+    base_conditions.append("gt!= '.' AND gt IS NOT NULL AND gt!='WT'")
+
     # 基础条件：clndn不是 . 和 null
     base_conditions.append("clndn != '.' AND clndn IS NOT NULL")
     
