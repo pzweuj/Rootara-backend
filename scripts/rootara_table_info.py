@@ -253,7 +253,7 @@ def get_all_snp_info(report_id, db_path, page_size=1000, page=1, sort_by="", sor
 
 # Clinvar表 || 看看能不能在前端实现，不一定要用这个函数
 # 改造后的Clinvar表函数，支持分页、排序和搜索，并增加致病性分类统计
-def get_clinvar_data(report_id, db_path, page_size=1000, page=1, sort_by="", sort_order='asc', 
+def get_clinvar_data(report_id, db_path, sort_by="", sort_order='asc', 
                      search_term="", filters={}, indel=False):
     
     # 在函数内部添加检查
@@ -275,12 +275,6 @@ def get_clinvar_data(report_id, db_path, page_size=1000, page=1, sort_by="", sor
         empty_result = {
             "data": {},
             "columns": [],
-            "pagination": {
-                "total": 0,
-                "page": page,
-                "page_size": page_size,
-                "total_pages": 0
-            },
             "statistics": {
                 "pathogenic": 0,
                 "likely_pathogenic": 0,
@@ -391,29 +385,17 @@ def get_clinvar_data(report_id, db_path, page_size=1000, page=1, sort_by="", sor
     cursor.execute(count_query, query_params)
     total_count = cursor.fetchone()[0]
     
-    # 计算偏移量
-    offset = (page - 1) * page_size
-    
-    # 添加分页
-    data_query += " LIMIT ? OFFSET ?"
-    query_params.extend([page_size, offset])
-    
-    # 执行查询
+    # 执行查询 - 不再使用分页限制，返回所有数据
     cursor.execute(data_query, query_params)
     
     # 获取列名
     column_names = [description[0] for description in cursor.description]
     
-    # 构建结果字典
+    # 构建结果字典 - 移除分页信息
     result = {
         "data": {},
         "columns": column_names,
-        "pagination": {
-            "total": total_count,
-            "page": page,
-            "page_size": page_size,
-            "total_pages": (total_count + page_size - 1) // page_size
-        },
+        "total": total_count,  # 保留总记录数信息
         "statistics": {
             "pathogenic": 0,
             "likely_pathogenic": 0,
@@ -450,30 +432,29 @@ def get_clinvar_data(report_id, db_path, page_size=1000, page=1, sort_by="", sor
         # 将数据添加到结果集
         result["data"][snp_dict.get('id', '') or snp_dict.get('rsid', '')] = snp_dict
     
-    # 为了获取完整的统计数据，需要查询所有符合条件的记录（不考虑分页和用户筛选条件）
-    if page == 1:  # 只在第一页执行统计查询，避免重复计算
-        stats_query = f"""
-        SELECT 
-            SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Pathogenic') OR clnsig = 'Pathogenic' THEN 1 ELSE 0 END) as pathogenic,
-            SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Likely_pathogenic') OR clnsig = 'Likely_pathogenic' THEN 1 ELSE 0 END) as likely_pathogenic,
-            SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Benign') OR clnsig = 'Benign' THEN 1 ELSE 0 END) as benign,
-            SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Likely_benign') OR clnsig = 'Likely_benign' THEN 1 ELSE 0 END) as likely_benign,
-            SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Uncertain_significance') OR clnsig = 'Uncertain_significance' THEN 1 ELSE 0 END) as uncertain_significance
-        {base_query}
-        """
-        
-        # 不添加用户筛选条件，直接执行查询
-        cursor.execute(stats_query, base_params)  # 只使用基础参数，不包含用户筛选条件
-        stats = cursor.fetchone()
-        
-        if stats:
-            result["statistics"] = {
-                "pathogenic": stats[0] or 0,
-                "likely_pathogenic": stats[1] or 0,
-                "benign": stats[2] or 0,
-                "likely_benign": stats[3] or 0,
-                "uncertain_significance": stats[4] or 0
-            }
+    # 获取完整的统计数据
+    stats_query = f"""
+    SELECT 
+        SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Pathogenic') OR clnsig = 'Pathogenic' THEN 1 ELSE 0 END) as pathogenic,
+        SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Likely_pathogenic') OR clnsig = 'Likely_pathogenic' THEN 1 ELSE 0 END) as likely_pathogenic,
+        SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Benign') OR clnsig = 'Benign' THEN 1 ELSE 0 END) as benign,
+        SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Likely_benign') OR clnsig = 'Likely_benign' THEN 1 ELSE 0 END) as likely_benign,
+        SUM(CASE WHEN (INSTR(clnsig, '/') > 0 AND SUBSTR(clnsig, 1, INSTR(clnsig, '/') - 1) = 'Uncertain_significance') OR clnsig = 'Uncertain_significance' THEN 1 ELSE 0 END) as uncertain_significance
+    {base_query}
+    """
+    
+    # 不添加用户筛选条件，直接执行查询
+    cursor.execute(stats_query, base_params)  # 只使用基础参数，不包含用户筛选条件
+    stats = cursor.fetchone()
+    
+    if stats:
+        result["statistics"] = {
+            "pathogenic": stats[0] or 0,
+            "likely_pathogenic": stats[1] or 0,
+            "benign": stats[2] or 0,
+            "likely_benign": stats[3] or 0,
+            "uncertain_significance": stats[4] or 0
+        }
     
     # 关闭数据库连接
     conn.close()
