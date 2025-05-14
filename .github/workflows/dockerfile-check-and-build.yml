@@ -21,8 +21,9 @@ jobs:
       - name: Check if commit message is a version
         id: check_version
         run: |
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          echo "Commit Message: $COMMIT_MSG"
+          # 仅获取commit message的第一行(Summary部分)
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          echo "Commit Message Summary: $COMMIT_MSG"
           
           # 检查提交信息是否符合版本格式（如v1.0.1）
           if [[ $COMMIT_MSG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
