@@ -104,7 +104,9 @@ def json_to_trait_table(json_file, db_path):
 
 
 # 新增特征 || 特征不支持修改
-
+def add_trait(data):
+    id = "TRA_" + generate_random_id()
+    pass
 
 
 
