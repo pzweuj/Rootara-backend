@@ -15,6 +15,7 @@ from scripts.rootara_reports_info import *                                      
 from scripts.rootara_table_info import get_snp_info_by_rsid, get_clinvar_data                        # 位点表信息相关
 from scripts.rootara_get_admixture import get_admixture_info                                         # 查询祖源分析信息
 from scripts.rootara_get_haplogroup import get_haplogroup_info                                       # 查询单倍群分析信息
+from scripts.rootara_traits import *                                                                 # 查询特征分析信息
 
 # API
 app = FastAPI(
@@ -289,6 +290,51 @@ async def api_get_clinvar_data(input_data: ClinvarQueryInput, api_key: str = Dep
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"查询ClinVar数据失败: {str(e)}")
+
+# 新增自定义特征
+@app.post("/traits/add", tags=["traits_add"])
+async def api_add_trait(input_data, api_key: str = Depends(verify_api_key)):
+    """
+    新增特征
+    """
+    add_trait(input_data, DB_PATH)
+    return StatusOutput(status_code=201)
+
+# 删除自定义特征
+@app.post("/traits/delete", tags=["traits_delete"])
+async def api_delete_trait(traits_id, api_key: str = Depends(verify_api_key)):
+    """
+    删除特征
+    """
+    delete_trait(traits_id, DB_PATH)
+    return StatusOutput(status_code=200)
+
+# 导入自定义特征
+@app.post("/traits/import", tags=["traits_import"])
+async def api_import_trait(input_data, api_key: str = Depends(verify_api_key)):
+    """
+    导入特征
+    """
+    self_json_to_trait_table(input_data, DB_PATH)
+    return StatusOutput(status_code=201)
+
+# 导出自定义特征
+@app.post("/traits/export", tags=["traits_export"])
+async def api_export_trait(export_name, api_key: str = Depends(verify_api_key)):
+    """
+    导出特征
+    """
+    self_traits_to_json(export_name, DB_PATH)
+    return StatusOutput(status_code=200)
+
+# 特征结果数据表
+@app.post("/traits/info", tags=["traits_info"])
+async def api_get_traits_info(report_id, api_key: str = Depends(verify_api_key)):
+    """
+    特征结果数据表
+    """
+    result = result_trait_data(report_id, DB_PATH)
+    return result
 
 # --- 运行应用 (通常在命令行中做，这里用于测试) ---
 if __name__ == "__main__":
