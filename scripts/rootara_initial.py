@@ -13,9 +13,11 @@ if __name__ == "__main__":
     # 将项目根目录添加到模块搜索路径
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from scripts.rootara_report_create import create_new_report
+    from scripts.rootara_traits import json_to_trait_table
 else:
     # 作为模块导入时使用相对导入
     from scripts.rootara_report_create import create_new_report
+    from scripts.rootara_traits import json_to_trait_table
 
 def generate_random_id():
     """
@@ -195,6 +197,9 @@ def generate_template_data(name, email, db_path):
 
     # 创建SNP表
     create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
+
+    # 创建特征表
+    json_to_trait_table('/app/database/default-traits.json', db_path)
 
 def init_db(name, email, db_file, force=False):
     if os.path.exists(db_file) and force is False:
