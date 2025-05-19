@@ -4,7 +4,7 @@
 import sqlite3
 
 # 根据RSID查询若干个SNP的信息
-def get_snp_info_by_rsid(rsid_list, report_id, db_path):
+def get_snp_info_by_rsid(rsid_list, report_id, db_path, concise=False):
     # 连接到数据库
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -33,6 +33,7 @@ def get_snp_info_by_rsid(rsid_list, report_id, db_path):
     
     # 创建结果字典
     result_dict = {}
+    concise_dict = {}
     
     # 查询每个RSID的SNP信息
     for rsid in rsid_list:
@@ -45,6 +46,7 @@ def get_snp_info_by_rsid(rsid_list, report_id, db_path):
             # 将结果转换为字典
             snp_dict = dict(zip(column_names, snp_info))
             result_dict[rsid] = snp_dict
+            concise_dict[rsid] = [snp_dict['ref'] + snp_dict['ref'], snp_dict['genotype']]
         else:
             # 如果没有找到该RSID的信息，添加空记录
             result_dict[rsid] = {
@@ -60,9 +62,12 @@ def get_snp_info_by_rsid(rsid_list, report_id, db_path):
                 'genotype': None,
                 'check': None
             }
+            concise_dict[rsid] = [None, None]
     
     # 关闭数据库连接
     conn.close()
+    if concise:
+        return concise_dict
     return result_dict
 
 # 根据chromosome position ref alt查询若干个SNP的信息

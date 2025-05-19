@@ -1,0 +1,217 @@
+[
+  {
+    "id": "eye-color",
+    "name": {
+      "en": "Eye Color",
+      "zh-CN": "眼睛颜色"
+    },
+    "description": {
+      "en": "You have genetic markers associated with brown eyes.",
+      "zh-CN": "您的基因标记与棕色眼睛相关。"
+    },
+    "icon": "Eye",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs12913832", "rs1800407", "rs16891982"],
+    "referenceGenotypes": ["GG", "CC", "CC"],
+    "yourGenotypes": ["GG", "CC", "CC"],
+    "formula": "SCORE(rs12913832:GG=10,GA=5,AA=0; rs1800407:CC=5,CT=3,TT=0)",
+    "scoreThresholds": {
+      "Brown": 12,
+      "Green": 8,
+      "Blue": 0
+    },
+    "result": {
+      "Brown": {
+        "default": "棕色",
+        "en": "Brown",
+        "zh-CN": "棕色"
+      },
+      "Green": {
+        "default": "绿色",
+        "en": "Green",
+        "zh-CN": "绿色"
+      },
+      "Blue": {
+        "default": "蓝色",
+        "en": "Blue",
+        "zh-CN": "蓝色"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "lactose-tolerance",
+    "name": {
+      "en": "Lactose Tolerance",
+      "zh-CN": "乳糖耐受性"
+    },
+    "description": {
+      "en": "You have genetic markers associated with lactose tolerance in adulthood.",
+      "zh-CN": "您的基因标记与成年后乳糖耐受性相关。"
+    },
+    "icon": "Stomach",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "internal",
+    "rsids": ["rs4988235", "rs182549"],
+    "referenceGenotypes": ["CT", "CT"],
+    "yourGenotypes": ["CT", "CT"],
+    "formula": "SCORE(rs4988235:CT=5,CC=0,TT=10; rs182549:CT=5,CC=0,TT=10)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      },
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      }
+    },
+    "reference": ["11111111", "222222222"]
+  },
+  {
+    "id": "caffeine-metabolism",
+    "name": {
+      "en": "Caffeine Metabolism",
+      "zh-CN": "咖啡因代谢"
+    },
+    "description": {
+      "en": "You have genetic markers associated with slow caffeine metabolism, which may increase sensitivity to caffeine.",
+      "zh-CN": "您的基因标记与咖啡因代谢缓慢相关，这可能会增加对咖啡因的敏感性。"
+    },
+    "icon": "Coffee",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": ["rs762551", "rs2472297"],
+    "referenceGenotypes": ["AC", "CT"],
+    "yourGenotypes": ["AC", "CT"],
+    "formula": "SCORE(rs762551:AA=10,AC=5,CC=0; rs2472297:CC=0,CT=5,TT=10)",
+    "scoreThresholds": {
+      "Fast": 15,
+      "Normal": 8,
+      "Slow": 0
+    },
+    "result": {
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Slow": {
+        "default": "缓慢",
+        "en": "Slow",
+        "zh-CN": "缓慢"
+      },
+      "Fast": {
+        "default": "快速",
+        "en": "Fast",
+        "zh-CN": "快速"
+      }
+    },
+    "reference": ["333333333"]
+  },
+  {
+    "id": "alcohol-flush",
+    "name": {
+      "en": "Alcohol Flush Reaction",
+      "zh-CN": "酒精潮红反应"
+    },
+    "description": {
+      "en": "You have genetic markers associated with alcohol flush reaction, commonly known as 'Asian flush'.",
+      "zh-CN": "您的基因标记与酒精潮红反应相关，通常被称为'亚洲红'。"
+    },
+    "icon": "Wine",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": ["rs671", "rs1229984"],
+    "referenceGenotypes": ["GA", "CT"],
+    "yourGenotypes": ["GA", "CT"],
+    "formula": "SCORE(rs671:GG=0,GA=5,AA=10; rs1229984:CC=0,CT=5,TT=10)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      },
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "vitamin-b12",
+    "name": {
+      "en": "Vitamin B12 Absorption",
+      "zh-CN": "维生素B12吸收"
+    },
+    "description": {
+      "en": "You have genetic markers associated with reduced vitamin B12 absorption, which may require dietary adjustments.",
+      "zh-CN": "您的基因标记与维生素B12吸收减少相关，可能需要调整饮食。"
+    },
+    "icon": "Vitamin",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": ["rs1801198", "rs602662"],
+    "referenceGenotypes": ["GG", "AG"],
+    "yourGenotypes": ["GG", "AG"],
+    "formula": "SCORE(rs1801198:CC=0,CG=5,GG=10; rs602662:AA=10,AG=5,GG=0)",
+    "scoreThresholds": {
+      "Normal": 15,
+      "Reduced": 8,
+      "Poor": 0
+    },
+    "result": {
+      "Reduced": {
+        "default": "降低",
+        "en": "Reduced",
+        "zh-CN": "降低"
+      },
+      "Poor": {
+        "default": "较差",
+        "en": "Poor",
+        "zh-CN": "较差"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      }
+    },
+    "reference": []
+  }
+]
