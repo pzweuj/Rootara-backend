@@ -320,11 +320,11 @@ async def api_import_trait(input_data, api_key: str = Depends(verify_api_key)):
 
 # 导出自定义特征
 @app.post("/traits/export", tags=["traits_export"])
-async def api_export_trait(export_name, api_key: str = Depends(verify_api_key)):
+async def api_export_trait(api_key: str = Depends(verify_api_key)):
     """
     导出特征
     """
-    self_traits_to_json(export_name, DB_PATH)
+    self_traits_to_json(DB_PATH)
     return StatusOutput(status_code=200)
 
 # 特征结果数据表

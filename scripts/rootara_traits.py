@@ -151,14 +151,13 @@ def delete_trait(id, db_path):
     conn.close()
 
 # 导入自定义特征
-def self_json_to_trait_table(json_file, db_path):
-    data = json.load(open(json_file, 'r', encoding='utf-8'))    
+def self_json_to_trait_table(data, db_path):
     # 遍历JSON数据，插入特征数据
     for item in data:
         add_trait(item, db_path, False)
 
 # 导出自定义特征
-def self_traits_to_json(json_file, db_path):
+def self_traits_to_json(db_path):
     # 将特征表处理为一个字典格式
     # 连接到SQLite数据库
     conn = sqlite3.connect(db_path)
@@ -206,10 +205,7 @@ def self_traits_to_json(json_file, db_path):
     
     # 将字典格式转换为JSON字符串
     json_str = json.dumps(traits, indent=4, ensure_ascii=False)
-
-    # 将JSON字符串写入文件
-    with open(json_file, 'w', encoding='utf-8') as f:
-        f.write(json_str)
+    return json_str
 
 # 公式解析器
 def parse_formula(formula, genotype_dict):
