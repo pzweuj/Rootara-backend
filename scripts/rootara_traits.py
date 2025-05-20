@@ -67,6 +67,9 @@ def add_trait(item, db_path, add_mode=True):
     cursor = conn.cursor()
 
     id = "TRA_" + generate_random_id()
+    if not add_mode:
+        id = item['id']
+
     # 将name和description转换为字典格式并存储
     name_dict = item['name'] if isinstance(item['name'], dict) else {'default': str(item['name'])}
     name_dict.setdefault('default', '')
