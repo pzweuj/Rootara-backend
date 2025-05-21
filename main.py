@@ -19,9 +19,10 @@ from scripts.rootara_traits import *                                            
 
 # API
 app = FastAPI(
+    # openapi_url = None,                 # 不生成文档
     title = 'Rootara API',
     description = 'Rootara API',
-    version = '0.2.5'
+    version = '0.5.4'
 )
 
 # 允许请求 || 开发状态
