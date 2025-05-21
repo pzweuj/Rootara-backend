@@ -50,7 +50,7 @@ class ReportIdInput(BaseModel):
     report_id: str
 
 class RsidInput(BaseModel):
-    rsid: str
+    rsid: list[str]  # rsid列表，每个元素为字符串类型
     report_id: str
 
 # 添加初始化数据库的请求模型
