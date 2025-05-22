@@ -66,17 +66,35 @@ def add_trait(item, db_path, add_mode=True):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
+    print('Process: ', item)
+
+    # 判断item是否为字符串类型
+    if isinstance(item, str):
+        try:
+            # 尝试将字符串解析为字典
+            item = json.loads(item)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"无法将字符串解析为有效的JSON格式: {e}")
+
     id = "TRA_" + generate_random_id()
     if not add_mode:
         id = item['id']
 
     # 将name和description转换为字典格式并存储
-    name_dict = item['name'] if isinstance(item['name'], dict) else {'default': str(item['name'])}
-    name_dict.setdefault('default', '')
-    name = str(name_dict)
-    desc_dict = item['description'] if isinstance(item['description'], dict) else {'default': str(item['description'])}
-    desc_dict.setdefault('default', '')
-    description = str(desc_dict)
+    if add_mode:
+        name = str({'en': '', 'zh-CN': '', 'default': item['name']})
+        description = str({'en': '', 'zh-CN': '', 'default': item['description']})
+        score_thresholds = str({'default': str(item['scoreThresholds']), 'zh-CN': '{{}}', 'en': '{{}}'})
+    else:
+        name_dict = item['name'] if isinstance(item['name'], dict) else {'default': str(item['name'])}
+        name_dict.setdefault('default', '')
+        name = str(name_dict)
+        desc_dict = item['description'] if isinstance(item['description'], dict) else {'default': str(item['description'])}
+        desc_dict.setdefault('default', '')
+        description = str(desc_dict)
+        score_thresholds_dict = item['scoreThresholds'] if isinstance(item['scoreThresholds'], dict) else {'default': str(item['scoreThresholds'])}
+        score_thresholds_dict.setdefault('default', '')
+        score_thresholds = str(score_thresholds_dict)
     icon = item['icon']
     confidence = item['confidence']
     is_default = False if add_mode else True
@@ -84,9 +102,6 @@ def add_trait(item, db_path, add_mode=True):
     category = item['category']
     rsids = ";".join(item['rsids'])
     formula = item['formula']
-    score_thresholds_dict = item['scoreThresholds'] if isinstance(item['scoreThresholds'], dict) else {'default': str(item['scoreThresholds'])}
-    score_thresholds_dict.setdefault('default', '')
-    score_thresholds = str(score_thresholds_dict)
     result = str(item['result'])
     reference = ";".join(item['reference'])
     
