@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import secrets
 from fastapi import FastAPI, HTTPException, Depends, Header, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, RootModel
@@ -36,10 +37,11 @@ app.add_middleware(
 
 # 设置API密钥 - 从环境变量读取
 API_KEY = os.environ.get("ROOTARA_API_KEY", "rootara_api_key_default_001")  # 生产环境必须设置环境变量
+assert API_KEY, "ROOTARA_API_KEY environment variable must be set"
 
 # 验证API密钥的依赖函数
 async def verify_api_key(x_api_key: str = Header(...)):
-    if x_api_key != API_KEY:
+    if not secrets.compare_digest(x_api_key, API_KEY):
         raise HTTPException(
             status_code=401,
             detail="无效的API密钥"
