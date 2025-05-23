@@ -2,7 +2,7 @@
 import os
 from fastapi import FastAPI, HTTPException, Depends, Header, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 from typing import List, Dict, Any, Union
 
 # 自定义脚本API
@@ -22,7 +22,7 @@ app = FastAPI(
     # openapi_url = None,                 # 不生成文档
     title = 'Rootara API',
     description = 'Rootara API',
-    version = '0.5.4'
+    version = '0.6.1'
 )
 
 # 允许请求 || 开发状态
@@ -328,8 +328,8 @@ class TraitImportItem(BaseModel):
     result: Union[Dict[str, Any], str] = Field(..., description="结果（不同语言下的结果）")
     reference: List[str] = Field(default=[], description="参考文献列表")
 
-class TraitImportRequest(BaseModel):
-    __root__: List[TraitImportItem] = Field(..., description="要导入的特征列表")
+class TraitImportRequest(RootModel):
+    root: List[TraitImportItem] = Field(..., description="要导入的特征列表")
 
 @app.post("/traits/import", tags=["traits_import"])
 async def api_import_trait(input_data: TraitImportRequest, api_key: str = Depends(verify_api_key)):
@@ -355,8 +355,8 @@ class TraitExportItem(BaseModel):
     result: Dict[str, Any] = Field(..., description="结果（不同语言下的结果）")
     reference: List[str] = Field(..., description="参考文献列表")
 
-class TraitExportResponse(BaseModel):
-    __root__: List[TraitExportItem] = Field(..., description="导出的特征列表")
+class TraitExportResponse(RootModel):
+    root: List[TraitExportItem] = Field(..., description="导出的特征列表")
 
 # 导出自定义特征
 @app.post("/traits/export", tags=["traits_export"], response_model=TraitExportResponse)
@@ -367,7 +367,7 @@ async def api_export_trait(api_key: str = Depends(verify_api_key)):
     traits_json = self_traits_to_json(DB_PATH)
     # 将JSON字符串转换为Python对象
     traits_data = json.loads(traits_json)
-    return TraitExportResponse(__root__=traits_data)
+    return TraitExportResponse(root=traits_data)
 
 # 特征结果数据表
 @app.post("/traits/info", tags=["traits_info"])
