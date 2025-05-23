@@ -2,8 +2,8 @@
 import os
 from fastapi import FastAPI, HTTPException, Depends, Header, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-# from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, Field
+from typing import List, Dict, Any, Union
 
 # 自定义脚本API
 from scripts.rootara_get_user_id import get_user_id                                                  # 获取用户ID
@@ -292,13 +292,26 @@ async def api_get_clinvar_data(input_data: ClinvarQueryInput, api_key: str = Dep
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"查询ClinVar数据失败: {str(e)}")
 
+# 请求模型
+class TraitInput(BaseModel):
+    name: str                  # 特征名称
+    description: str           # 特征描述
+    scoreThresholds: str       # 分数阈值
+    icon: str                  # 图标
+    confidence: int            # 置信度
+    category: str              # 分类
+    rsids: List[str]           # rsid列表
+    formula: str               # 公式
+    result: str                # 结果（不同语言下的结果）
+    reference: List[str]       # 参考文献列表
+
 # 新增自定义特征
 @app.post("/traits/add", tags=["traits_add"])
-async def api_add_trait(input_data, api_key: str = Depends(verify_api_key)):
+async def api_add_trait(input_data: TraitInput, api_key: str = Depends(verify_api_key)):
     """
     新增特征
     """
-    add_trait(input_data, DB_PATH)
+    add_trait(input_data.model_dump(), DB_PATH)
     return StatusOutput(status_code=201)
 
 # 删除自定义特征
@@ -311,22 +324,59 @@ async def api_delete_trait(traits_id, api_key: str = Depends(verify_api_key)):
     return StatusOutput(status_code=200)
 
 # 导入自定义特征
+class TraitImportItem(BaseModel):
+    id: str = Field(..., description="特征ID，导入时使用原始ID")
+    name: Union[Dict[str, str], str] = Field(..., description="特征名称，可以是字符串或多语言字典")
+    description: Union[Dict[str, str], str] = Field(..., description="特征描述，可以是字符串或多语言字典")
+    icon: str = Field(..., description="图标")
+    confidence: int = Field(..., description="置信度")
+    category: str = Field(..., description="分类")
+    rsids: List[str] = Field(default=[], description="rsid列表")
+    formula: str = Field(..., description="公式")
+    scoreThresholds: Union[Dict[str, Any], str] = Field(..., description="分数阈值")
+    result: Union[Dict[str, Any], str] = Field(..., description="结果（不同语言下的结果）")
+    reference: List[str] = Field(default=[], description="参考文献列表")
+
+class TraitImportRequest(BaseModel):
+    __root__: List[TraitImportItem] = Field(..., description="要导入的特征列表")
+
 @app.post("/traits/import", tags=["traits_import"])
-async def api_import_trait(input_data, api_key: str = Depends(verify_api_key)):
+async def api_import_trait(input_data: TraitImportRequest, api_key: str = Depends(verify_api_key)):
     """
     导入特征
     """
-    self_json_to_trait_table(input_data, DB_PATH)
+    self_json_to_trait_table(input_data.__root__, DB_PATH)
     return StatusOutput(status_code=201)
 
 # 导出自定义特征
-@app.post("/traits/export", tags=["traits_export"])
+class TraitExportItem(BaseModel):
+    id: str = Field(..., description="特征ID")
+    name: Dict[str, str] = Field(..., description="特征名称，多语言字典")
+    description: Dict[str, str] = Field(..., description="特征描述，多语言字典")
+    icon: str = Field(..., description="图标")
+    confidence: int = Field(..., description="置信度")
+    isDefault: bool = Field(..., description="是否为默认特征")
+    createdAt: str = Field(..., description="创建时间")
+    category: str = Field(..., description="分类")
+    rsids: List[str] = Field(..., description="rsid列表")
+    formula: str = Field(..., description="公式")
+    scoreThresholds: Dict[str, Any] = Field(..., description="分数阈值")
+    result: Dict[str, Any] = Field(..., description="结果（不同语言下的结果）")
+    reference: List[str] = Field(..., description="参考文献列表")
+
+class TraitExportResponse(BaseModel):
+    __root__: List[TraitExportItem] = Field(..., description="导出的特征列表")
+
+# 导出自定义特征
+@app.post("/traits/export", tags=["traits_export"], response_model=TraitExportResponse)
 async def api_export_trait(api_key: str = Depends(verify_api_key)):
     """
     导出特征
     """
-    self_traits_to_json(DB_PATH)
-    return StatusOutput(status_code=200)
+    traits_json = self_traits_to_json(DB_PATH)
+    # 将JSON字符串转换为Python对象
+    traits_data = json.loads(traits_json)
+    return TraitExportResponse(__root__=traits_data)
 
 # 特征结果数据表
 @app.post("/traits/info", tags=["traits_info"])

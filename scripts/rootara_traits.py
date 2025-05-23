@@ -12,6 +12,7 @@ name: {
 description: {
     "en": "",
     "zh-CN": "中文描述",
+    "default": ""
 }
 icon: ""
 confidence: ""
@@ -61,49 +62,31 @@ def generate_random_id():
 
 # 新增特征 || 特征不支持修改
 # data的格式与json的相同
-def add_trait(item, db_path, add_mode=True):
+# 在main中设定data的格式
+def add_trait(data, db_path, add_mode=True):
     # 连接到SQLite数据库
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    print('Process: ', item)
+    # 这个data是一个json格式
+    print('Process: ', data)
 
-    # 判断item是否为字符串类型
-    if isinstance(item, str):
-        try:
-            # 尝试将字符串解析为字典
-            item = json.loads(item)
-        except json.JSONDecodeError as e:
-            raise ValueError(f"无法将字符串解析为有效的JSON格式: {e}")
+    # 生成一个随机ID，如果是默认的特征，则使用原本的ID
+    id = "TRA_" + generate_random_id() if add_mode else data['id']
 
-    id = "TRA_" + generate_random_id()
-    if not add_mode:
-        id = item['id']
-
-    # 将name和description转换为字典格式并存储
-    if add_mode:
-        name = str({'en': '', 'zh-CN': '', 'default': item['name']})
-        description = str({'en': '', 'zh-CN': '', 'default': item['description']})
-        score_thresholds = str({'default': str(item['scoreThresholds']), 'zh-CN': '{{}}', 'en': '{{}}'})
-    else:
-        name_dict = item['name'] if isinstance(item['name'], dict) else {'default': str(item['name'])}
-        name_dict.setdefault('default', '')
-        name = str(name_dict)
-        desc_dict = item['description'] if isinstance(item['description'], dict) else {'default': str(item['description'])}
-        desc_dict.setdefault('default', '')
-        description = str(desc_dict)
-        score_thresholds_dict = item['scoreThresholds'] if isinstance(item['scoreThresholds'], dict) else {'default': str(item['scoreThresholds'])}
-        score_thresholds_dict.setdefault('default', '')
-        score_thresholds = str(score_thresholds_dict)
-    icon = item['icon']
-    confidence = item['confidence']
+    # 区分‘新增’和‘默认’的特征插入 || 应由前端指定插入的内容 || 因此这里其实不必区分
+    name = str(data['name'])
+    description = str(data['description'])
+    score_thresholds = str(data['scoreThresholds'])
+    icon = data['icon']
+    confidence = data['confidence']
     is_default = False if add_mode else True
     created_at = datetime.now().isoformat()
-    category = item['category']
-    rsids = ";".join(item['rsids'])
-    formula = item['formula']
-    result = str(item['result'])
-    reference = ";".join(item['reference'])
+    category = data['category']
+    rsids = ";".join(data['rsids'])               # 尽管在新增内容时，会出现当前样本的rsid基因型，但不需要保存到数据库中
+    formula = data['formula']
+    result = str(data['result'])                  # 主要用于记录不同语言下的结果
+    reference = ";".join(data['reference'])
     
     # 插入数据
     cursor.execute('''
