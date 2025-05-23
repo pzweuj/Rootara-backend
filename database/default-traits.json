@@ -3,11 +3,13 @@
     "id": "eye-color",
     "name": {
       "en": "Eye Color",
-      "zh-CN": "眼睛颜色"
+      "zh-CN": "眼睛颜色",
+      "default": ""
     },
     "description": {
       "en": "You have genetic markers associated with brown eyes.",
-      "zh-CN": "您的基因标记与棕色眼睛相关。"
+      "zh-CN": "您的基因标记与棕色眼睛相关。",
+      "default": ""
     },
     "icon": "Eye",
     "confidence": "high",
@@ -46,11 +48,13 @@
     "id": "lactose-tolerance",
     "name": {
       "en": "Lactose Tolerance",
-      "zh-CN": "乳糖耐受性"
+      "zh-CN": "乳糖耐受性",
+      "default": ""
     },
     "description": {
       "en": "You have genetic markers associated with lactose tolerance in adulthood.",
-      "zh-CN": "您的基因标记与成年后乳糖耐受性相关。"
+      "zh-CN": "您的基因标记与成年后乳糖耐受性相关。",
+      "default": ""
     },
     "icon": "Stomach",
     "confidence": "high",
@@ -89,11 +93,13 @@
     "id": "caffeine-metabolism",
     "name": {
       "en": "Caffeine Metabolism",
-      "zh-CN": "咖啡因代谢"
+      "zh-CN": "咖啡因代谢",
+      "default": ""
     },
     "description": {
       "en": "You have genetic markers associated with slow caffeine metabolism, which may increase sensitivity to caffeine.",
-      "zh-CN": "您的基因标记与咖啡因代谢缓慢相关，这可能会增加对咖啡因的敏感性。"
+      "zh-CN": "您的基因标记与咖啡因代谢缓慢相关，这可能会增加对咖啡因的敏感性。",
+      "default": ""
     },
     "icon": "Coffee",
     "confidence": "medium",
@@ -132,11 +138,13 @@
     "id": "alcohol-flush",
     "name": {
       "en": "Alcohol Flush Reaction",
-      "zh-CN": "酒精潮红反应"
+      "zh-CN": "酒精潮红反应",
+      "default": ""
     },
     "description": {
       "en": "You have genetic markers associated with alcohol flush reaction, commonly known as 'Asian flush'.",
-      "zh-CN": "您的基因标记与酒精潮红反应相关，通常被称为'亚洲红'。"
+      "zh-CN": "您的基因标记与酒精潮红反应相关，通常被称为'亚洲红'。",
+      "default": ""
     },
     "icon": "Wine",
     "confidence": "high",
@@ -175,11 +183,13 @@
     "id": "vitamin-b12",
     "name": {
       "en": "Vitamin B12 Absorption",
-      "zh-CN": "维生素B12吸收"
+      "zh-CN": "维生素B12吸收",
+      "default": ""
     },
     "description": {
       "en": "You have genetic markers associated with reduced vitamin B12 absorption, which may require dietary adjustments.",
-      "zh-CN": "您的基因标记与维生素B12吸收减少相关，可能需要调整饮食。"
+      "zh-CN": "您的基因标记与维生素B12吸收减少相关，可能需要调整饮食。",
+      "default": ""
     },
     "icon": "Vitamin",
     "confidence": "medium",
