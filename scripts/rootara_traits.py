@@ -37,7 +37,6 @@ from datetime import datetime
 import random
 import json
 import sqlite3
-import ast
 
 # 根据脚本运行方式选择合适的导入路径
 if __name__ == "__main__":
@@ -75,9 +74,9 @@ def add_trait(data, db_path, add_mode=True):
     id = "TRA_" + generate_random_id() if add_mode else data['id']
 
     # 区分‘新增’和‘默认’的特征插入 || 应由前端指定插入的内容 || 因此这里其实不必区分
-    name = str(data['name'])
-    description = str(data['description'])
-    score_thresholds = str(data['scoreThresholds'])
+    name = json.dumps(data['name'])
+    description = json.dumps(data['description'])
+    score_thresholds = json.dumps(data['scoreThresholds'])
     icon = data['icon']
     confidence = data['confidence']
     is_default = False if add_mode else True
@@ -85,7 +84,7 @@ def add_trait(data, db_path, add_mode=True):
     category = data['category']
     rsids = ";".join(data['rsids'])               # 尽管在新增内容时，会出现当前样本的rsid基因型，但不需要保存到数据库中
     formula = data['formula']
-    result = str(data['result'])                  # 主要用于记录不同语言下的结果
+    result = json.dumps(data['result'])                  # 主要用于记录不同语言下的结果
     reference = ";".join(data['reference'])
     
     # 插入数据
@@ -175,10 +174,10 @@ def self_traits_to_json(db_path):
     for row in rows:
         try:
             # 使用ast.literal_eval更安全地解析字符串字典
-            name_dict = ast.literal_eval(row[1])
-            description_dict = ast.literal_eval(row[2])
-            score_thresholds_dict = ast.literal_eval(row[10])
-            result_dict = ast.literal_eval(row[11])
+            name_dict = json.loads(row[1])
+            description_dict = json.loads(row[2])
+            score_thresholds_dict = json.loads(row[10])
+            result_dict = json.loads(row[11])
             
             trait = {
                 'id': row[0],
@@ -450,12 +449,13 @@ def result_trait_data(report_id, db_path):
     # 转换为字典格式
     traits = []
     for row in rows:
+        print(row)
         try:
             # 使用ast.literal_eval更安全地解析字符串字典
-            name_dict = ast.literal_eval(row[1])
-            description_dict = ast.literal_eval(row[2])
-            score_thresholds_dict = ast.literal_eval(row[10])
-            result_dict = ast.literal_eval(row[11])
+            name_dict = json.loads(row[1])
+            description_dict = json.loads(row[2])
+            score_thresholds_dict = json.loads(row[10])
+            result_dict = json.loads(row[11])
             
             trait = {
                 'id': row[0],
