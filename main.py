@@ -291,7 +291,7 @@ class TraitInput(BaseModel):
     description: str           # 特征描述
     scoreThresholds: str       # 分数阈值
     icon: str                  # 图标
-    confidence: int            # 置信度
+    confidence: str            # 置信度
     category: str              # 分类
     rsids: List[str]           # rsid列表
     formula: str               # 公式
