@@ -347,7 +347,7 @@ class TraitExportItem(BaseModel):
     name: Dict[str, str] = Field(..., description="特征名称，多语言字典")
     description: Dict[str, str] = Field(..., description="特征描述，多语言字典")
     icon: str = Field(..., description="图标")
-    confidence: int = Field(..., description="置信度")
+    confidence: str = Field(..., description="置信度")
     isDefault: bool = Field(..., description="是否为默认特征")
     createdAt: str = Field(..., description="创建时间")
     category: str = Field(..., description="分类")
