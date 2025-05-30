@@ -94,12 +94,12 @@ async def api_create_new_report(input_data: CreateReportInput, api_key: str = De
     Create a new report.
     """
     create_new_report(
-        input_data.user_id, 
-        input_data.input_data, 
-        input_data.source_from, 
-        input_data.report_name, 
-        DB_PATH, 
-        input_data.default_report, 
+        input_data.user_id,
+        input_data.input_data,
+        input_data.source_from,
+        input_data.report_name,
+        DB_PATH,
+        input_data.default_report,
         False
     )
     return StatusOutput(status_code=201)
@@ -111,10 +111,10 @@ async def api_export_rawdata(report_id: str, api_key: str = Depends(verify_api_k
     Export raw data.
     """
     filename, file_content = export_rawdata(report_id)
-    
+
     if filename is None or file_content is None:
         raise HTTPException(status_code=404, detail="原始数据文件不存在或无法读取")
-    
+
     # 返回文件内容作为响应
     return Response(
         content=file_content,
@@ -322,7 +322,7 @@ class TraitImportItem(BaseModel):
     name: Union[Dict[str, str], str] = Field(..., description="特征名称，可以是字符串或多语言字典")
     description: Union[Dict[str, str], str] = Field(..., description="特征描述，可以是字符串或多语言字典")
     icon: str = Field(..., description="图标")
-    confidence: int = Field(..., description="置信度")
+    confidence: str = Field(..., description="置信度")
     category: str = Field(..., description="分类")
     rsids: List[str] = Field(default=[], description="rsid列表")
     formula: str = Field(..., description="公式")
@@ -338,7 +338,9 @@ async def api_import_trait(input_data: TraitImportRequest, api_key: str = Depend
     """
     导入特征
     """
-    self_json_to_trait_table(input_data.__root__, DB_PATH)
+    # 将Pydantic模型转换为字典列表
+    traits_list = [trait.model_dump() for trait in input_data.root]
+    self_json_to_trait_table(traits_list, DB_PATH)
     return StatusOutput(status_code=201)
 
 # 导出自定义特征
