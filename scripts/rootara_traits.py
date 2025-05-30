@@ -73,10 +73,26 @@ def add_trait(data, db_path, add_mode=True):
     # 生成一个随机ID，如果是默认的特征，则使用原本的ID
     id = "TRA_" + generate_random_id() if add_mode else data['id']
 
-    # 区分‘新增’和‘默认’的特征插入 || 应由前端指定插入的内容 || 因此这里其实不必区分
-    name = json.dumps(data['name'])
-    description = json.dumps(data['description'])
-    score_thresholds = json.dumps(data['scoreThresholds'])
+    # 处理可能已经是字符串的JSON字段
+    def ensure_json_string(field):
+        if isinstance(field, dict):
+            return json.dumps(field)
+        elif isinstance(field, str):
+            try:
+                # 尝试解析，如果是有效的JSON字符串，直接返回
+                json.loads(field)
+                return field
+            except:
+                # 不是有效的JSON字符串，进行序列化
+                return json.dumps(field)
+        return json.dumps(field)
+    
+    # 区分'新增'和'默认'的特征插入
+    name = ensure_json_string(data['name'])
+    description = ensure_json_string(data['description'])
+    score_thresholds = ensure_json_string(data['scoreThresholds'])
+    result = ensure_json_string(data['result'])
+    
     icon = data['icon']
     confidence = data['confidence']
     is_default = False if add_mode else True
@@ -84,7 +100,6 @@ def add_trait(data, db_path, add_mode=True):
     category = data['category']
     rsids = ";".join(data['rsids'])               # 尽管在新增内容时，会出现当前样本的rsid基因型，但不需要保存到数据库中
     formula = data['formula']
-    result = json.dumps(data['result'])                  # 主要用于记录不同语言下的结果
     reference = ";".join(data['reference'])
     
     # 插入数据
