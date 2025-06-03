@@ -41,11 +41,11 @@ def init_sqlite_db(db_path):
         db_dir = os.path.dirname(db_path)
         if not os.path.exists(db_dir):
             os.makedirs(db_dir)
-            
+
         # 连接到数据库（如果不存在则创建）
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
-        
+
         # 创建用户表 || 这个表暂时是摆设，没有用
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -57,7 +57,7 @@ def init_sqlite_db(db_path):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         ''')
-        
+
         # 创建报告表
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS reports (
@@ -72,7 +72,7 @@ def init_sqlite_db(db_path):
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
         ''')
-        
+
         # 创建SNP数据表
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS RPT_TEMPLATE01 (
@@ -156,56 +156,180 @@ def init_sqlite_db(db_path):
 
         # 提交事务
         conn.commit()
-        
+
         # 关闭连接
         conn.close()
-        
+
         return True
     except Exception as e:
         print(f"初始化数据库失败: {e}")
         return False
 
 # 生成模板数据
-def generate_template_data(name, email, db_path):
+def generate_template_data(name, email, db_path, force=False):
     # 用户的唯一ID
     user_id = 'ID_' + generate_random_id()
     template_id = 'RPT_TEMPLATE01'
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # 记录信息到用户表
-    cursor.execute('''
-    INSERT INTO users (email, user_id, name, created_at)
-    VALUES (?, ?, ?, ?)
-    ''', (email, user_id, name, datetime.now().isoformat()))
+    if force:
+        # 强制模式：更新或插入用户数据
+        cursor.execute('SELECT user_id FROM users WHERE email = ?', (email,))
+        existing_user = cursor.fetchone()
 
-    # 创建祖源分析记录
-    cursor.execute('''
-    INSERT INTO admixture (report_id, Omotic, North_Sea_Germanic, West_African, East_Asian)
-    VALUES (?,?,?,?,?)
-    ''', (template_id, 0.01, 0.02, 13.28, 86.69))
-    
-    # 创建单倍群信息表
-    cursor.execute('''
-    INSERT INTO haplogroup (report_id, y_hap, mt_hap)
-    VALUES (?,?,?)
-    ''', (template_id, 'O2a2a1a1a', 'F1a1'))
+        if existing_user:
+            # 用户已存在，更新用户信息
+            user_id = existing_user[0]
+            cursor.execute('''
+            UPDATE users SET name = ?, created_at = ? WHERE email = ?
+            ''', (name, datetime.now().isoformat(), email))
+            print(f"强制更新用户信息: {user_id}")
+        else:
+            # 用户不存在，创建新用户
+            cursor.execute('''
+            INSERT INTO users (email, user_id, name, created_at)
+            VALUES (?, ?, ?, ?)
+            ''', (email, user_id, name, datetime.now().isoformat()))
+            print(f"强制创建新用户: {user_id}")
 
-    # 先提交一次事务关闭连接
-    conn.commit()
-    conn.close()
+        # 强制更新或插入祖源分析记录
+        cursor.execute('SELECT report_id FROM admixture WHERE report_id = ?', (template_id,))
+        if cursor.fetchone():
+            cursor.execute('''
+            UPDATE admixture SET Omotic = ?, North_Sea_Germanic = ?, West_African = ?, East_Asian = ?
+            WHERE report_id = ?
+            ''', (0.01, 0.02, 13.28, 86.69, template_id))
+            print("强制更新祖源分析记录")
+        else:
+            cursor.execute('''
+            INSERT INTO admixture (report_id, Omotic, North_Sea_Germanic, West_African, East_Asian)
+            VALUES (?,?,?,?,?)
+            ''', (template_id, 0.01, 0.02, 13.28, 86.69))
+            print("强制创建祖源分析记录")
 
-    # 创建SNP表
-    create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
+        # 强制更新或插入单倍群信息
+        cursor.execute('SELECT report_id FROM haplogroup WHERE report_id = ?', (template_id,))
+        if cursor.fetchone():
+            cursor.execute('''
+            UPDATE haplogroup SET y_hap = ?, mt_hap = ? WHERE report_id = ?
+            ''', ('O2a2a1a1a', 'F1a1', template_id))
+            print("强制更新单倍群信息记录")
+        else:
+            cursor.execute('''
+            INSERT INTO haplogroup (report_id, y_hap, mt_hap)
+            VALUES (?,?,?)
+            ''', (template_id, 'O2a2a1a1a', 'F1a1'))
+            print("强制创建单倍群信息记录")
 
-    # 创建特征表
-    json_to_trait_table('/app/database/default-traits.json', db_path)
+        # 提交事务关闭连接
+        conn.commit()
+        conn.close()
+
+        # 强制重新创建SNP表
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (template_id,))
+        if cursor.fetchone():
+            cursor.execute(f'DROP TABLE {template_id}')
+            conn.commit()
+            print("强制删除现有SNP表")
+        conn.close()
+
+        create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
+        print("强制重新创建SNP表")
+
+        # 强制重新创建特征表
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='traits'")
+        if cursor.fetchone():
+            cursor.execute('DELETE FROM traits')
+            conn.commit()
+            print("强制清空特征表")
+        conn.close()
+
+        json_to_trait_table('/app/database/default-traits.json', db_path)
+        print("强制重新创建特征表")
+
+    else:
+        # 非强制模式：只在数据不存在时创建
+        cursor.execute('SELECT user_id FROM users WHERE email = ?', (email,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            user_id = existing_user[0]
+            print(f"用户已存在，使用现有ID: {user_id}")
+        else:
+            cursor.execute('''
+            INSERT INTO users (email, user_id, name, created_at)
+            VALUES (?, ?, ?, ?)
+            ''', (email, user_id, name, datetime.now().isoformat()))
+            print(f"创建新用户: {user_id}")
+
+        # 检查并创建祖源分析记录
+        cursor.execute('SELECT report_id FROM admixture WHERE report_id = ?', (template_id,))
+        if not cursor.fetchone():
+            cursor.execute('''
+            INSERT INTO admixture (report_id, Omotic, North_Sea_Germanic, West_African, East_Asian)
+            VALUES (?,?,?,?,?)
+            ''', (template_id, 0.01, 0.02, 13.28, 86.69))
+            print("创建祖源分析记录")
+
+        # 检查并创建单倍群信息
+        cursor.execute('SELECT report_id FROM haplogroup WHERE report_id = ?', (template_id,))
+        if not cursor.fetchone():
+            cursor.execute('''
+            INSERT INTO haplogroup (report_id, y_hap, mt_hap)
+            VALUES (?,?,?)
+            ''', (template_id, 'O2a2a1a1a', 'F1a1'))
+            print("创建单倍群信息记录")
+
+        # 提交事务关闭连接
+        conn.commit()
+        conn.close()
+
+        # 检查并创建SNP表
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (template_id,))
+        if not cursor.fetchone():
+            conn.close()
+            create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
+            print("创建SNP表")
+        else:
+            conn.close()
+
+        # 检查并创建特征表
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='traits'")
+        if not cursor.fetchone():
+            conn.close()
+            json_to_trait_table('/app/database/default-traits.json', db_path)
+            print("创建特征表")
+        else:
+            cursor.execute('SELECT COUNT(*) FROM traits')
+            trait_count = cursor.fetchone()[0]
+            conn.close()
+            if trait_count == 0:
+                json_to_trait_table('/app/database/default-traits.json', db_path)
+                print("特征表为空，插入默认数据")
 
 def init_db(name, email, db_file, force=False):
     if os.path.exists(db_file) and force is False:
         print(f"数据库文件已存在: {db_file}")
+        print("跳过初始化，使用现有数据库")
+        return
+    elif os.path.exists(db_file) and force is True:
+        print(f"数据库文件已存在，但强制重新初始化: {db_file}")
+        if init_sqlite_db(db_file):
+            generate_template_data(name, email, db_file, force=True)
+            print(f"数据库强制重新初始化成功: {db_file}")
+        else:
+            print("数据库强制重新初始化失败")
     elif init_sqlite_db(db_file):
-        generate_template_data(name, email, db_file)
+        generate_template_data(name, email, db_file, force=False)
         print(f"数据库初始化成功: {db_file}")
     else:
         print("数据库初始化失败")
