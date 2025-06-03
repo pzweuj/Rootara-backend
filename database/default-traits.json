@@ -7,12 +7,12 @@
       "default": ""
     },
     "description": {
-      "en": "You have genetic markers associated with brown eyes.",
-      "zh-CN": "您的基因标记与棕色眼睛相关。",
+      "en": "You have genetic markers associated with eyes' colour.",
+      "zh-CN": "与您眼睛虹膜颜色相关的基因标记。",
       "default": ""
     },
     "icon": "Eye",
-    "confidence": "high",
+    "confidence": "low",
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
@@ -53,7 +53,7 @@
     },
     "description": {
       "en": "You have genetic markers associated with lactose tolerance in adulthood.",
-      "zh-CN": "您的基因标记与成年后乳糖耐受性相关。",
+      "zh-CN": "与您的乳糖耐受性相关的基因标记。",
       "default": ""
     },
     "icon": "Stomach",
