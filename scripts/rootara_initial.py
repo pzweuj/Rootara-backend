@@ -334,12 +334,23 @@ def init_db(name, email, db_file, force=False):
     else:
         print("数据库初始化失败")
 
+def str_to_bool(v):
+    """将字符串转换为布尔值"""
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 def main():
     parser = argparse.ArgumentParser(description='初始化SQLite数据库')
     parser.add_argument('--name', type=str, help='用户姓名')
     parser.add_argument('--email', type=str, help='用户邮箱')
     parser.add_argument('--db', type=str, help='数据库路径')
-    parser.add_argument('--force', type=bool, help='是否强制覆盖已存在的数据库，默认False', default=False)
+    parser.add_argument('--force', type=str_to_bool, help='是否强制覆盖已存在的数据库，默认False', default=False)
     args = parser.parse_args()
 
     if not args.name or not args.email or not args.db:
