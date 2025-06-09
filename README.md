@@ -6,7 +6,7 @@ Rootara-backend 是 [Rootara](https://github.com/pzweuj/Rootara) 的后端服务
 
 **当前系统处于测试状态，所有遗传特征分析结果均为随机生成的测试数据，不具有任何科学依据或参考价值。请勿将测试结果用于任何医学、健康或其他重要决策。**
 
-version: 0.4.0
+version: v0.7.6
 
 ## 第三方模块
 
