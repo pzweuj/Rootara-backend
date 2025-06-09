@@ -293,12 +293,22 @@ def generate_template_data(name, email, db_path, force=False):
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (template_id,))
-        if not cursor.fetchone():
+        table_exists = cursor.fetchone()
+
+        if not table_exists:
             conn.close()
             create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
             print("创建SNP表")
         else:
+            # 表存在，但检查是否有数据
+            cursor.execute(f"SELECT COUNT(*) FROM {template_id}")
+            row_count = cursor.fetchone()[0]
             conn.close()
+
+            if row_count == 0:
+                # 表存在但没有数据，需要填充数据
+                create_new_report(user_id, '/app/database/TEMPLATE01.txt', '23andme', "EXAMPLE", db_path, initail=True)
+                print("SNP表存在但为空，填充数据")
 
         # 检查并创建特征表
         conn = sqlite3.connect(db_path)
