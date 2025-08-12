@@ -45,6 +45,372 @@
     "reference": []
   },
   {
+    "id": "hair-color",
+    "name": {
+      "en": "Hair Color",
+      "zh-CN": "头发颜色",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with natural hair color pigmentation.",
+      "zh-CN": "与您天然头发颜色色素沉着相关的基因标记。",
+      "default": ""
+    },
+    "icon": "Scissors",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs12913832", "rs1805007"],
+    "referenceGenotypes": ["GG", "CC"],
+    "yourGenotypes": ["GG", "CC"],
+    "formula": "SCORE(rs12913832:GG=8,GA=5,AA=0; rs1805007:CC=0,CT=3,TT=10)",
+    "scoreThresholds": {
+      "Black": 12,
+      "Brown": 8,
+      "Blonde": 4,
+      "Red": 0
+    },
+    "result": {
+      "Black": {
+        "default": "黑色",
+        "en": "Black",
+        "zh-CN": "黑色"
+      },
+      "Brown": {
+        "default": "棕色",
+        "en": "Brown",
+        "zh-CN": "棕色"
+      },
+      "Blonde": {
+        "default": "金色",
+        "en": "Blonde",
+        "zh-CN": "金色"
+      },
+      "Red": {
+        "default": "红色",
+        "en": "Red",
+        "zh-CN": "红色"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "skin-pigmentation",
+    "name": {
+      "en": "Skin Pigmentation",
+      "zh-CN": "皮肤色素沉着",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with skin pigmentation and melanin production.",
+      "zh-CN": "与您皮肤色素沉着和黑色素生成相关的基因标记。",
+      "default": ""
+    },
+    "icon": "Sun",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs1426654", "rs16891982"],
+    "referenceGenotypes": ["GG", "CC"],
+    "yourGenotypes": ["GG", "CC"],
+    "formula": "SCORE(rs1426654:AA=0,AG=5,GG=10; rs16891982:CC=5,CG=3,GG=0)",
+    "scoreThresholds": {
+      "Dark": 12,
+      "Medium": 6,
+      "Light": 0
+    },
+    "result": {
+      "Dark": {
+        "default": "深色",
+        "en": "Dark",
+        "zh-CN": "深色"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Light": {
+        "default": "浅色",
+        "en": "Light",
+        "zh-CN": "浅色"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "freckles-tendency",
+    "name": {
+      "en": "Freckles Tendency",
+      "zh-CN": "雀斑倾向",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with freckle formation and sun sensitivity.",
+      "zh-CN": "您的基因标记与雀斑形成和阳光敏感性相关。",
+      "default": ""
+    },
+    "icon": "Sun",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs12203592"],
+    "referenceGenotypes": ["CC"],
+    "yourGenotypes": ["CC"],
+    "formula": "SCORE(rs12203592:TT=10,CT=5,CC=0)",
+    "scoreThresholds": {
+      "High": 8,
+      "Medium": 4,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "muscle-fiber-type",
+    "name": {
+      "en": "Muscle Fiber Type",
+      "zh-CN": "肌纤维类型",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with muscle fiber composition affecting athletic performance.",
+      "zh-CN": "您的基因标记与影响运动表现的肌纤维组成相关。",
+      "default": ""
+    },
+    "icon": "Zap",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs1815739"],
+    "referenceGenotypes": ["CC"],
+    "yourGenotypes": ["CC"],
+    "formula": "SCORE(rs1815739:CC=10,CT=5,TT=0)",
+    "scoreThresholds": {
+      "Fast": 8,
+      "Mixed": 4,
+      "Slow": 0
+    },
+    "result": {
+      "Fast": {
+        "default": "快肌型",
+        "en": "Fast",
+        "zh-CN": "快肌型"
+      },
+      "Mixed": {
+        "default": "混合型",
+        "en": "Mixed",
+        "zh-CN": "混合型"
+      },
+      "Slow": {
+        "default": "慢肌型",
+        "en": "Slow",
+        "zh-CN": "慢肌型"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "earwax-type",
+    "name": {
+      "en": "Earwax Type",
+      "zh-CN": "耳垢类型",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with earwax consistency and type.",
+      "zh-CN": "您的基因标记与耳垢稠度和类型相关。",
+      "default": ""
+    },
+    "icon": "Droplet",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs17822931"],
+    "referenceGenotypes": ["CC"],
+    "yourGenotypes": ["CC"],
+    "formula": "SCORE(rs17822931:CC=10,CT=5,TT=0)",
+    "scoreThresholds": {
+      "Wet": 8,
+      "Mixed": 4,
+      "Dry": 0
+    },
+    "result": {
+      "Wet": {
+        "default": "湿性",
+        "en": "Wet",
+        "zh-CN": "湿性"
+      },
+      "Mixed": {
+        "default": "混合",
+        "en": "Mixed",
+        "zh-CN": "混合"
+      },
+      "Dry": {
+        "default": "干性",
+        "en": "Dry",
+        "zh-CN": "干性"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "bitter-taste-sensitivity",
+    "name": {
+      "en": "Bitter Taste Sensitivity",
+      "zh-CN": "苦味敏感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with sensitivity to bitter compounds like PTC.",
+      "zh-CN": "您的基因标记与对PTC等苦味化合物的敏感性相关。",
+      "default": ""
+    },
+    "icon": "Frown",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs713598"],
+    "referenceGenotypes": ["CC"],
+    "yourGenotypes": ["CC"],
+    "formula": "SCORE(rs713598:CC=10,CG=5,GG=0)",
+    "scoreThresholds": {
+      "High": 8,
+      "Medium": 4,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "body-odor",
+    "name": {
+      "en": "Body Odor",
+      "zh-CN": "体味",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with body odor production and intensity.",
+      "zh-CN": "您的基因标记与体味产生和强度相关。",
+      "default": ""
+    },
+    "icon": "Wind",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs17822931"],
+    "referenceGenotypes": ["CC"],
+    "yourGenotypes": ["CC"],
+    "formula": "SCORE(rs17822931:TT=10,CT=5,CC=0)",
+    "scoreThresholds": {
+      "Strong": 8,
+      "Medium": 4,
+      "Mild": 0
+    },
+    "result": {
+      "Strong": {
+        "default": "强",
+        "en": "Strong",
+        "zh-CN": "强"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Mild": {
+        "default": "轻微",
+        "en": "Mild",
+        "zh-CN": "轻微"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "cilantro-taste",
+    "name": {
+      "en": "Cilantro Taste Perception",
+      "zh-CN": "香菜味觉感知",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with cilantro taste perception - whether it tastes soapy or pleasant.",
+      "zh-CN": "您的基因标记与香菜味觉感知相关 - 是否尝起来像肥皂或令人愉快。",
+      "default": ""
+    },
+    "icon": "Leaf",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": ["rs72921001"],
+    "referenceGenotypes": ["AA"],
+    "yourGenotypes": ["AA"],
+    "formula": "SCORE(rs72921001:AA=10,AG=5,GG=0)",
+    "scoreThresholds": {
+      "Pleasant": 8,
+      "Neutral": 4,
+      "Soapy": 0
+    },
+    "result": {
+      "Pleasant": {
+        "default": "愉快",
+        "en": "Pleasant",
+        "zh-CN": "愉快"
+      },
+      "Neutral": {
+        "default": "中性",
+        "en": "Neutral",
+        "zh-CN": "中性"
+      },
+      "Soapy": {
+        "default": "肥皂味",
+        "en": "Soapy",
+        "zh-CN": "肥皂味"
+      }
+    },
+    "reference": []
+  },
+  {
     "id": "lactose-tolerance",
     "name": {
       "en": "Lactose Tolerance",
@@ -56,7 +422,7 @@
       "zh-CN": "与您的乳糖耐受性相关的基因标记。",
       "default": ""
     },
-    "icon": "Stomach",
+    "icon": "Droplet",
     "confidence": "high",
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
@@ -88,6 +454,141 @@
       }
     },
     "reference": ["11111111", "222222222"]
+  },
+  {
+    "id": "iron-absorption",
+    "name": {
+      "en": "Iron Absorption",
+      "zh-CN": "铁吸收能力",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with iron absorption and metabolism, which may affect iron levels in your body.",
+      "zh-CN": "您的基因标记与铁吸收和代谢相关，可能会影响体内铁水平。",
+      "default": ""
+    },
+    "icon": "Zap",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "internal",
+    "rsids": ["rs1800562", "rs1799945"],
+    "referenceGenotypes": ["GG", "GG"],
+    "yourGenotypes": ["GG", "GG"],
+    "formula": "SCORE(rs1800562:GG=10,GA=5,AA=0; rs1799945:GG=5,CG=3,CC=0)",
+    "scoreThresholds": {
+      "Normal": 12,
+      "Enhanced": 8,
+      "Reduced": 0
+    },
+    "result": {
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Enhanced": {
+        "default": "增强",
+        "en": "Enhanced",
+        "zh-CN": "增强"
+      },
+      "Reduced": {
+        "default": "降低",
+        "en": "Reduced",
+        "zh-CN": "降低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "detoxification-capacity",
+    "name": {
+      "en": "Detoxification Capacity",
+      "zh-CN": "解毒能力",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with detoxification enzyme activity, which affects your body's ability to process toxins.",
+      "zh-CN": "您的基因标记与解毒酶活性相关，影响身体处理毒素的能力。",
+      "default": ""
+    },
+    "icon": "Umbrella",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "internal",
+    "rsids": ["rs1695", "rs1138272"],
+    "referenceGenotypes": ["AA", "CC"],
+    "yourGenotypes": ["AA", "CC"],
+    "formula": "SCORE(rs1695:AA=10,AG=5,GG=0; rs1138272:CC=5,CT=3,TT=0)",
+    "scoreThresholds": {
+      "Fast": 12,
+      "Normal": 6,
+      "Slow": 0
+    },
+    "result": {
+      "Fast": {
+        "default": "快速",
+        "en": "Fast",
+        "zh-CN": "快速"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Slow": {
+        "default": "缓慢",
+        "en": "Slow",
+        "zh-CN": "缓慢"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "pain-sensitivity",
+    "name": {
+      "en": "Pain Sensitivity",
+      "zh-CN": "疼痛敏感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with pain perception and sensitivity to painful stimuli.",
+      "zh-CN": "您的基因标记与疼痛感知和对疼痛刺激的敏感性相关。",
+      "default": ""
+    },
+    "icon": "AlertCircle",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "internal",
+    "rsids": ["rs6269"],
+    "referenceGenotypes": ["GG"],
+    "yourGenotypes": ["GG"],
+    "formula": "SCORE(rs6269:GG=10,GA=5,AA=0)",
+    "scoreThresholds": {
+      "High": 8,
+      "Normal": 4,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
   },
   {
     "id": "caffeine-metabolism",
@@ -135,6 +636,96 @@
     "reference": ["333333333"]
   },
   {
+    "id": "diabetes-t2-risk",
+    "name": {
+      "en": "Type 2 Diabetes Risk",
+      "zh-CN": "2型糖尿病风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with type 2 diabetes risk, which may influence your predisposition to developing the condition.",
+      "zh-CN": "您的基因标记与2型糖尿病风险相关，可能影响您患病的倾向性。",
+      "default": ""
+    },
+    "icon": "Activity",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": ["rs7903146", "rs12255372"],
+    "referenceGenotypes": ["CC", "GG"],
+    "yourGenotypes": ["CC", "GG"],
+    "formula": "SCORE(rs7903146:TT=10,CT=5,CC=0; rs12255372:TT=8,GT=4,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "alzheimer-risk",
+    "name": {
+      "en": "Alzheimer's Risk",
+      "zh-CN": "阿尔茨海默病风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with Alzheimer's disease risk, particularly the APOE gene variants.",
+      "zh-CN": "您的基因标记与阿尔茨海默病风险相关，特别是APOE基因变异。",
+      "default": ""
+    },
+    "icon": "Brain",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": ["rs429358", "rs7412"],
+    "referenceGenotypes": ["CC", "CC"],
+    "yourGenotypes": ["CC", "CC"],
+    "formula": "SCORE(rs429358:TT=10,CT=5,CC=0; rs7412:TT=8,CT=4,CC=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
     "id": "alcohol-flush",
     "name": {
       "en": "Alcohol Flush Reaction",
@@ -180,6 +771,141 @@
     "reference": []
   },
   {
+    "id": "exercise-response",
+    "name": {
+      "en": "Exercise Response",
+      "zh-CN": "运动反应",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with exercise response and athletic performance, which may influence your optimal training type.",
+      "zh-CN": "您的基因标记与运动反应和运动表现相关，可能影响您的最佳训练类型。",
+      "default": ""
+    },
+    "icon": "Activity",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": ["rs1815739", "rs8192678"],
+    "referenceGenotypes": ["CC", "CC"],
+    "yourGenotypes": ["CC", "CC"],
+    "formula": "SCORE(rs1815739:CC=10,CT=5,TT=0; rs8192678:CC=5,CT=3,TT=0)",
+    "scoreThresholds": {
+      "Power": 12,
+      "Mixed": 6,
+      "Endurance": 0
+    },
+    "result": {
+      "Power": {
+        "default": "力量型",
+        "en": "Power",
+        "zh-CN": "力量型"
+      },
+      "Mixed": {
+        "default": "混合型",
+        "en": "Mixed",
+        "zh-CN": "混合型"
+      },
+      "Endurance": {
+        "default": "耐力型",
+        "en": "Endurance",
+        "zh-CN": "耐力型"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "morning-person",
+    "name": {
+      "en": "Morning Person Tendency",
+      "zh-CN": "早起倾向",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with circadian rhythm preferences and morning vs evening activity.",
+      "zh-CN": "您的基因标记与昼夜节律偏好以及早晨与晚上活动相关。",
+      "default": ""
+    },
+    "icon": "Sun",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": ["rs1801260"],
+    "referenceGenotypes": ["TT"],
+    "yourGenotypes": ["TT"],
+    "formula": "SCORE(rs1801260:TT=10,TC=5,CC=0)",
+    "scoreThresholds": {
+      "Morning": 8,
+      "Neutral": 4,
+      "Evening": 0
+    },
+    "result": {
+      "Morning": {
+        "default": "早起型",
+        "en": "Morning",
+        "zh-CN": "早起型"
+      },
+      "Neutral": {
+        "default": "中性",
+        "en": "Neutral",
+        "zh-CN": "中性"
+      },
+      "Evening": {
+        "default": "夜猫子",
+        "en": "Evening",
+        "zh-CN": "夜猫子"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "nicotine-dependence",
+    "name": {
+      "en": "Nicotine Dependence",
+      "zh-CN": "尼古丁依赖",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with nicotine addiction susceptibility and smoking cessation success.",
+      "zh-CN": "您的基因标记与尼古丁成瘾易感性和戒烟成功率相关。",
+      "default": ""
+    },
+    "icon": "Snowflake",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": ["rs16969968"],
+    "referenceGenotypes": ["GG"],
+    "yourGenotypes": ["GG"],
+    "formula": "SCORE(rs16969968:AA=10,AG=5,GG=0)",
+    "scoreThresholds": {
+      "High": 8,
+      "Medium": 4,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
     "id": "vitamin-b12",
     "name": {
       "en": "Vitamin B12 Absorption",
@@ -191,7 +917,7 @@
       "zh-CN": "您的基因标记与维生素B12吸收减少相关，可能需要调整饮食。",
       "default": ""
     },
-    "icon": "Vitamin",
+    "icon": "Dna",
     "confidence": "medium",
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
@@ -220,6 +946,96 @@
         "default": "正常",
         "en": "Normal",
         "zh-CN": "正常"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "omega3-metabolism",
+    "name": {
+      "en": "Omega-3 Metabolism",
+      "zh-CN": "Omega-3代谢",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with omega-3 fatty acid metabolism, which may affect your dietary requirements.",
+      "zh-CN": "您的基因标记与Omega-3脂肪酸代谢相关，可能影响您的饮食需求。",
+      "default": ""
+    },
+    "icon": "Utensils",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": ["rs174547", "rs174556"],
+    "referenceGenotypes": ["GG", "CC"],
+    "yourGenotypes": ["GG", "CC"],
+    "formula": "SCORE(rs174547:GG=10,GT=5,TT=0; rs174556:CC=5,CT=3,TT=0)",
+    "scoreThresholds": {
+      "Efficient": 12,
+      "Normal": 6,
+      "Poor": 0
+    },
+    "result": {
+      "Efficient": {
+        "default": "高效",
+        "en": "Efficient",
+        "zh-CN": "高效"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Poor": {
+        "default": "较差",
+        "en": "Poor",
+        "zh-CN": "较差"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "folate-metabolism",
+    "name": {
+      "en": "Folate Metabolism",
+      "zh-CN": "叶酸代谢",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with folate metabolism and methylation processes.",
+      "zh-CN": "您的基因标记与叶酸代谢和甲基化过程相关。",
+      "default": ""
+    },
+    "icon": "Leaf",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": ["rs1801133"],
+    "referenceGenotypes": ["CC"],
+    "yourGenotypes": ["CC"],
+    "formula": "SCORE(rs1801133:CC=10,CT=5,TT=0)",
+    "scoreThresholds": {
+      "Normal": 8,
+      "Reduced": 4,
+      "Poor": 0
+    },
+    "result": {
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Reduced": {
+        "default": "降低",
+        "en": "Reduced",
+        "zh-CN": "降低"
+      },
+      "Poor": {
+        "default": "较差",
+        "en": "Poor",
+        "zh-CN": "较差"
       }
     },
     "reference": []
