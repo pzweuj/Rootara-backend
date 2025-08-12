@@ -16,9 +16,21 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs12913832", "rs1800407", "rs16891982"],
-    "referenceGenotypes": ["GG", "CC", "CC"],
-    "yourGenotypes": ["GG", "CC", "CC"],
+    "rsids": [
+      "rs12913832",
+      "rs1800407",
+      "rs16891982"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "CC",
+      "CC"
+    ],
     "formula": "SCORE(rs12913832:GG=10,GA=5,AA=0; rs1800407:CC=5,CT=3,TT=0)",
     "scoreThresholds": {
       "Brown": 12,
@@ -61,9 +73,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs12913832", "rs1805007"],
-    "referenceGenotypes": ["GG", "CC"],
-    "yourGenotypes": ["GG", "CC"],
+    "rsids": [
+      "rs12913832",
+      "rs1805007"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "CC"
+    ],
     "formula": "SCORE(rs12913832:GG=8,GA=5,AA=0; rs1805007:CC=0,CT=3,TT=10)",
     "scoreThresholds": {
       "Black": 12,
@@ -112,9 +133,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs1426654", "rs16891982"],
-    "referenceGenotypes": ["GG", "CC"],
-    "yourGenotypes": ["GG", "CC"],
+    "rsids": [
+      "rs1426654",
+      "rs16891982"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "CC"
+    ],
     "formula": "SCORE(rs1426654:AA=0,AG=5,GG=10; rs16891982:CC=5,CG=3,GG=0)",
     "scoreThresholds": {
       "Dark": 12,
@@ -157,9 +187,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs12203592"],
-    "referenceGenotypes": ["CC"],
-    "yourGenotypes": ["CC"],
+    "rsids": [
+      "rs12203592"
+    ],
+    "referenceGenotypes": [
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC"
+    ],
     "formula": "SCORE(rs12203592:TT=10,CT=5,CC=0)",
     "scoreThresholds": {
       "High": 8,
@@ -202,9 +238,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs1815739"],
-    "referenceGenotypes": ["CC"],
-    "yourGenotypes": ["CC"],
+    "rsids": [
+      "rs1815739"
+    ],
+    "referenceGenotypes": [
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC"
+    ],
     "formula": "SCORE(rs1815739:CC=10,CT=5,TT=0)",
     "scoreThresholds": {
       "Fast": 8,
@@ -247,9 +289,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs17822931"],
-    "referenceGenotypes": ["CC"],
-    "yourGenotypes": ["CC"],
+    "rsids": [
+      "rs17822931"
+    ],
+    "referenceGenotypes": [
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC"
+    ],
     "formula": "SCORE(rs17822931:CC=10,CT=5,TT=0)",
     "scoreThresholds": {
       "Wet": 8,
@@ -292,9 +340,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs713598"],
-    "referenceGenotypes": ["CC"],
-    "yourGenotypes": ["CC"],
+    "rsids": [
+      "rs713598"
+    ],
+    "referenceGenotypes": [
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC"
+    ],
     "formula": "SCORE(rs713598:CC=10,CG=5,GG=0)",
     "scoreThresholds": {
       "High": 8,
@@ -337,9 +391,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs17822931"],
-    "referenceGenotypes": ["CC"],
-    "yourGenotypes": ["CC"],
+    "rsids": [
+      "rs17822931"
+    ],
+    "referenceGenotypes": [
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC"
+    ],
     "formula": "SCORE(rs17822931:TT=10,CT=5,CC=0)",
     "scoreThresholds": {
       "Strong": 8,
@@ -382,9 +442,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "appearance",
-    "rsids": ["rs72921001"],
-    "referenceGenotypes": ["AA"],
-    "yourGenotypes": ["AA"],
+    "rsids": [
+      "rs72921001"
+    ],
+    "referenceGenotypes": [
+      "AA"
+    ],
+    "yourGenotypes": [
+      "AA"
+    ],
     "formula": "SCORE(rs72921001:AA=10,AG=5,GG=0)",
     "scoreThresholds": {
       "Pleasant": 8,
@@ -427,9 +493,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "internal",
-    "rsids": ["rs4988235", "rs182549"],
-    "referenceGenotypes": ["CT", "CT"],
-    "yourGenotypes": ["CT", "CT"],
+    "rsids": [
+      "rs4988235",
+      "rs182549"
+    ],
+    "referenceGenotypes": [
+      "CT",
+      "CT"
+    ],
+    "yourGenotypes": [
+      "CT",
+      "CT"
+    ],
     "formula": "SCORE(rs4988235:CT=5,CC=0,TT=10; rs182549:CT=5,CC=0,TT=10)",
     "scoreThresholds": {
       "High": 15,
@@ -453,7 +528,10 @@
         "zh-CN": "高"
       }
     },
-    "reference": ["11111111", "222222222"]
+    "reference": [
+      "11111111",
+      "222222222"
+    ]
   },
   {
     "id": "iron-absorption",
@@ -472,9 +550,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "internal",
-    "rsids": ["rs1800562", "rs1799945"],
-    "referenceGenotypes": ["GG", "GG"],
-    "yourGenotypes": ["GG", "GG"],
+    "rsids": [
+      "rs1800562",
+      "rs1799945"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "GG"
+    ],
     "formula": "SCORE(rs1800562:GG=10,GA=5,AA=0; rs1799945:GG=5,CG=3,CC=0)",
     "scoreThresholds": {
       "Normal": 12,
@@ -517,9 +604,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "internal",
-    "rsids": ["rs1695", "rs1138272"],
-    "referenceGenotypes": ["AA", "CC"],
-    "yourGenotypes": ["AA", "CC"],
+    "rsids": [
+      "rs1695",
+      "rs1138272"
+    ],
+    "referenceGenotypes": [
+      "AA",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "AA",
+      "CC"
+    ],
     "formula": "SCORE(rs1695:AA=10,AG=5,GG=0; rs1138272:CC=5,CT=3,TT=0)",
     "scoreThresholds": {
       "Fast": 12,
@@ -562,9 +658,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "internal",
-    "rsids": ["rs6269"],
-    "referenceGenotypes": ["GG"],
-    "yourGenotypes": ["GG"],
+    "rsids": [
+      "rs6269"
+    ],
+    "referenceGenotypes": [
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG"
+    ],
     "formula": "SCORE(rs6269:GG=10,GA=5,AA=0)",
     "scoreThresholds": {
       "High": 8,
@@ -607,9 +709,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "risk",
-    "rsids": ["rs762551", "rs2472297"],
-    "referenceGenotypes": ["AC", "CT"],
-    "yourGenotypes": ["AC", "CT"],
+    "rsids": [
+      "rs762551",
+      "rs2472297"
+    ],
+    "referenceGenotypes": [
+      "AC",
+      "CT"
+    ],
+    "yourGenotypes": [
+      "AC",
+      "CT"
+    ],
     "formula": "SCORE(rs762551:AA=10,AC=5,CC=0; rs2472297:CC=0,CT=5,TT=10)",
     "scoreThresholds": {
       "Fast": 15,
@@ -633,7 +744,9 @@
         "zh-CN": "快速"
       }
     },
-    "reference": ["333333333"]
+    "reference": [
+      "333333333"
+    ]
   },
   {
     "id": "diabetes-t2-risk",
@@ -652,9 +765,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "risk",
-    "rsids": ["rs7903146", "rs12255372"],
-    "referenceGenotypes": ["CC", "GG"],
-    "yourGenotypes": ["CC", "GG"],
+    "rsids": [
+      "rs7903146",
+      "rs12255372"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "GG"
+    ],
     "formula": "SCORE(rs7903146:TT=10,CT=5,CC=0; rs12255372:TT=8,GT=4,GG=0)",
     "scoreThresholds": {
       "High": 15,
@@ -697,9 +819,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "risk",
-    "rsids": ["rs429358", "rs7412"],
-    "referenceGenotypes": ["CC", "CC"],
-    "yourGenotypes": ["CC", "CC"],
+    "rsids": [
+      "rs429358",
+      "rs7412"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "CC"
+    ],
     "formula": "SCORE(rs429358:TT=10,CT=5,CC=0; rs7412:TT=8,CT=4,CC=0)",
     "scoreThresholds": {
       "High": 15,
@@ -742,9 +873,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "lifestyle",
-    "rsids": ["rs671", "rs1229984"],
-    "referenceGenotypes": ["GA", "CT"],
-    "yourGenotypes": ["GA", "CT"],
+    "rsids": [
+      "rs671",
+      "rs1229984"
+    ],
+    "referenceGenotypes": [
+      "GA",
+      "CT"
+    ],
+    "yourGenotypes": [
+      "GA",
+      "CT"
+    ],
     "formula": "SCORE(rs671:GG=0,GA=5,AA=10; rs1229984:CC=0,CT=5,TT=10)",
     "scoreThresholds": {
       "High": 15,
@@ -787,9 +927,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "lifestyle",
-    "rsids": ["rs1815739", "rs8192678"],
-    "referenceGenotypes": ["CC", "CC"],
-    "yourGenotypes": ["CC", "CC"],
+    "rsids": [
+      "rs1815739",
+      "rs8192678"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "CC"
+    ],
     "formula": "SCORE(rs1815739:CC=10,CT=5,TT=0; rs8192678:CC=5,CT=3,TT=0)",
     "scoreThresholds": {
       "Power": 12,
@@ -832,9 +981,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "lifestyle",
-    "rsids": ["rs1801260"],
-    "referenceGenotypes": ["TT"],
-    "yourGenotypes": ["TT"],
+    "rsids": [
+      "rs1801260"
+    ],
+    "referenceGenotypes": [
+      "TT"
+    ],
+    "yourGenotypes": [
+      "TT"
+    ],
     "formula": "SCORE(rs1801260:TT=10,TC=5,CC=0)",
     "scoreThresholds": {
       "Morning": 8,
@@ -877,9 +1032,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "lifestyle",
-    "rsids": ["rs16969968"],
-    "referenceGenotypes": ["GG"],
-    "yourGenotypes": ["GG"],
+    "rsids": [
+      "rs16969968"
+    ],
+    "referenceGenotypes": [
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG"
+    ],
     "formula": "SCORE(rs16969968:AA=10,AG=5,GG=0)",
     "scoreThresholds": {
       "High": 8,
@@ -922,9 +1083,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "nutrition",
-    "rsids": ["rs1801198", "rs602662"],
-    "referenceGenotypes": ["GG", "AG"],
-    "yourGenotypes": ["GG", "AG"],
+    "rsids": [
+      "rs1801198",
+      "rs602662"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "AG"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "AG"
+    ],
     "formula": "SCORE(rs1801198:CC=0,CG=5,GG=10; rs602662:AA=10,AG=5,GG=0)",
     "scoreThresholds": {
       "Normal": 15,
@@ -967,9 +1137,18 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "nutrition",
-    "rsids": ["rs174547", "rs174556"],
-    "referenceGenotypes": ["GG", "CC"],
-    "yourGenotypes": ["GG", "CC"],
+    "rsids": [
+      "rs174547",
+      "rs174556"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "CC"
+    ],
     "formula": "SCORE(rs174547:GG=10,GT=5,TT=0; rs174556:CC=5,CT=3,TT=0)",
     "scoreThresholds": {
       "Efficient": 12,
@@ -1012,9 +1191,15 @@
     "isDefault": true,
     "createdAt": "2023-01-01T00:00:00Z",
     "category": "nutrition",
-    "rsids": ["rs1801133"],
-    "referenceGenotypes": ["CC"],
-    "yourGenotypes": ["CC"],
+    "rsids": [
+      "rs1801133"
+    ],
+    "referenceGenotypes": [
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC"
+    ],
     "formula": "SCORE(rs1801133:CC=10,CT=5,TT=0)",
     "scoreThresholds": {
       "Normal": 8,
@@ -1036,6 +1221,1626 @@
         "default": "较差",
         "en": "Poor",
         "zh-CN": "较差"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "alcohol-metabolism",
+    "name": {
+      "en": "Alcohol Metabolism",
+      "zh-CN": "酒精代谢",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with alcohol metabolism efficiency and alcohol dehydrogenase activity.",
+      "zh-CN": "您的基因标记与酒精代谢效率和酒精脱氢酶活性相关。",
+      "default": ""
+    },
+    "icon": "Wine",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "internal",
+    "rsids": [
+      "rs1229984",
+      "rs671"
+    ],
+    "referenceGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "formula": "SCORE(rs1229984:AA=10,AG=5,GG=0; rs671:GG=10,GA=5,AA=0)",
+    "scoreThresholds": {
+      "Fast": 15,
+      "Normal": 8,
+      "Slow": 0
+    },
+    "result": {
+      "Fast": {
+        "default": "快速",
+        "en": "Fast",
+        "zh-CN": "快速"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Slow": {
+        "default": "缓慢",
+        "en": "Slow",
+        "zh-CN": "缓慢"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "warfarin-sensitivity",
+    "name": {
+      "en": "Warfarin Sensitivity",
+      "zh-CN": "华法林敏感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with warfarin drug metabolism and dosage requirements.",
+      "zh-CN": "您的基因标记与华法林药物代谢和剂量需求相关。",
+      "default": ""
+    },
+    "icon": "Heart",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs9923231",
+      "rs1799853"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "formula": "SCORE(rs9923231:TT=10,CT=5,CC=0; rs1799853:AA=10,AG=5,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "aspirin-response",
+    "name": {
+      "en": "Aspirin Response",
+      "zh-CN": "阿司匹林反应",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with aspirin effectiveness and cardiovascular protection.",
+      "zh-CN": "您的基因标记与阿司匹林有效性和心血管保护相关。",
+      "default": ""
+    },
+    "icon": "Heart",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs20417",
+      "rs5918"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "TT"
+    ],
+    "formula": "SCORE(rs20417:CC=10,CG=5,GG=0; rs5918:TT=5,TC=3,CC=0)",
+    "scoreThresholds": {
+      "Good": 12,
+      "Moderate": 6,
+      "Poor": 0
+    },
+    "result": {
+      "Good": {
+        "default": "良好",
+        "en": "Good",
+        "zh-CN": "良好"
+      },
+      "Moderate": {
+        "default": "中等",
+        "en": "Moderate",
+        "zh-CN": "中等"
+      },
+      "Poor": {
+        "default": "较差",
+        "en": "Poor",
+        "zh-CN": "较差"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "clopidogrel-response",
+    "name": {
+      "en": "Clopidogrel Response",
+      "zh-CN": "氯吡格雷反应",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with clopidogrel drug metabolism and effectiveness.",
+      "zh-CN": "您的基因标记与氯吡格雷药物代谢和有效性相关。",
+      "default": ""
+    },
+    "icon": "Activity",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs4244285",
+      "rs4986893"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "formula": "SCORE(rs4244285:GG=10,GA=5,AA=0; rs4986893:GG=5,GA=3,AA=0)",
+    "scoreThresholds": {
+      "Normal": 12,
+      "Intermediate": 6,
+      "Poor": 0
+    },
+    "result": {
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Intermediate": {
+        "default": "中等",
+        "en": "Intermediate",
+        "zh-CN": "中等"
+      },
+      "Poor": {
+        "default": "较差",
+        "en": "Poor",
+        "zh-CN": "较差"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "statin-response",
+    "name": {
+      "en": "Statin Response",
+      "zh-CN": "他汀类药物反应",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with statin drug effectiveness and muscle toxicity risk.",
+      "zh-CN": "您的基因标记与他汀类药物有效性和肌肉毒性风险相关。",
+      "default": ""
+    },
+    "icon": "Activity",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs4149056",
+      "rs4363657"
+    ],
+    "referenceGenotypes": [
+      "TT",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "TT",
+      "TT"
+    ],
+    "formula": "SCORE(rs4149056:TT=10,TC=5,CC=0; rs4363657:TT=5,TG=3,GG=0)",
+    "scoreThresholds": {
+      "Good": 12,
+      "Moderate": 6,
+      "Poor": 0
+    },
+    "result": {
+      "Good": {
+        "default": "良好",
+        "en": "Good",
+        "zh-CN": "良好"
+      },
+      "Moderate": {
+        "default": "中等",
+        "en": "Moderate",
+        "zh-CN": "中等"
+      },
+      "Poor": {
+        "default": "较差",
+        "en": "Poor",
+        "zh-CN": "较差"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "celiac-disease-risk",
+    "name": {
+      "en": "Celiac Disease Risk",
+      "zh-CN": "乳糜泻风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with celiac disease susceptibility and gluten sensitivity.",
+      "zh-CN": "您的基因标记与乳糜泻易感性和麸质敏感性相关。",
+      "default": ""
+    },
+    "icon": "AlertCircle",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs2187668",
+      "rs7454108"
+    ],
+    "referenceGenotypes": [
+      "TT",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "TT",
+      "TT"
+    ],
+    "formula": "SCORE(rs2187668:CC=10,CT=5,TT=0; rs7454108:AA=8,AT=4,TT=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "psoriasis-risk",
+    "name": {
+      "en": "Psoriasis Risk",
+      "zh-CN": "银屑病风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with psoriasis susceptibility and autoimmune skin conditions.",
+      "zh-CN": "您的基因标记与银屑病易感性和自身免疫性皮肤病相关。",
+      "default": ""
+    },
+    "icon": "Sun",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs12188917",
+      "rs2395029"
+    ],
+    "referenceGenotypes": [
+      "TT",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "TT",
+      "GG"
+    ],
+    "formula": "SCORE(rs12188917:CC=10,CT=5,TT=0; rs2395029:TT=8,GT=4,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "rheumatoid-arthritis-risk",
+    "name": {
+      "en": "Rheumatoid Arthritis Risk",
+      "zh-CN": "类风湿关节炎风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with rheumatoid arthritis susceptibility and joint inflammation.",
+      "zh-CN": "您的基因标记与类风湿关节炎易感性和关节炎症相关。",
+      "default": ""
+    },
+    "icon": "AlertCircle",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs6457617",
+      "rs6679677"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "AA"
+    ],
+    "formula": "SCORE(rs6457617:TT=10,CT=5,CC=0; rs6679677:GG=8,AG=4,AA=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "age-related-macular-degeneration",
+    "name": {
+      "en": "Age-Related Macular Degeneration Risk",
+      "zh-CN": "年龄相关性黄斑变性风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with age-related macular degeneration and vision loss risk.",
+      "zh-CN": "您的基因标记与年龄相关性黄斑变性和视力丧失风险相关。",
+      "default": ""
+    },
+    "icon": "Eye",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs1061170",
+      "rs10490924"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "formula": "SCORE(rs1061170:TT=10,GT=5,GG=0; rs10490924:TT=8,GT=4,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "glaucoma-risk",
+    "name": {
+      "en": "Glaucoma Risk",
+      "zh-CN": "青光眼风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with primary open-angle glaucoma susceptibility.",
+      "zh-CN": "您的基因标记与原发性开角型青光眼易感性相关。",
+      "default": ""
+    },
+    "icon": "Eye",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs2157719",
+      "rs4236601"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "formula": "SCORE(rs2157719:AA=10,AG=5,GG=0; rs4236601:GG=8,AG=4,AA=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "venous-thromboembolism-risk",
+    "name": {
+      "en": "Venous Thromboembolism Risk",
+      "zh-CN": "静脉血栓栓塞风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with blood clotting disorders and thrombosis risk.",
+      "zh-CN": "您的基因标记与血液凝固障碍和血栓形成风险相关。",
+      "default": ""
+    },
+    "icon": "Heart",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs6025",
+      "rs1799963"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "formula": "SCORE(rs6025:AA=10,AG=5,GG=0; rs1799963:AA=8,AG=4,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "migraine-susceptibility",
+    "name": {
+      "en": "Migraine Susceptibility",
+      "zh-CN": "偏头痛易感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with migraine headache susceptibility and frequency.",
+      "zh-CN": "您的基因标记与偏头痛易感性和发作频率相关。",
+      "default": ""
+    },
+    "icon": "Brain",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "risk",
+    "rsids": [
+      "rs1835740",
+      "rs11172113"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "formula": "SCORE(rs1835740:TT=10,CT=5,CC=0; rs11172113:TT=8,CT=4,CC=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "restless-leg-syndrome",
+    "name": {
+      "en": "Restless Leg Syndrome",
+      "zh-CN": "不宁腿综合征",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with restless leg syndrome and sleep movement disorders.",
+      "zh-CN": "您的基因标记与不宁腿综合征和睡眠运动障碍相关。",
+      "default": ""
+    },
+    "icon": "Moon",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": [
+      "rs3923809",
+      "rs9296249"
+    ],
+    "referenceGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "formula": "SCORE(rs3923809:GG=10,AG=5,AA=0; rs9296249:AA=8,AG=4,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "sleep-apnea-risk",
+    "name": {
+      "en": "Sleep Apnea Risk",
+      "zh-CN": "睡眠呼吸暂停风险",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with obstructive sleep apnea susceptibility.",
+      "zh-CN": "您的基因标记与阻塞性睡眠呼吸暂停易感性相关。",
+      "default": ""
+    },
+    "icon": "Moon",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": [
+      "rs9937053",
+      "rs11126184"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "TT"
+    ],
+    "formula": "SCORE(rs9937053:AA=10,AG=5,GG=0; rs11126184:CC=8,CT=4,TT=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "longevity-associated",
+    "name": {
+      "en": "Longevity Associated Variants",
+      "zh-CN": "长寿相关变异",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with exceptional longevity and healthy aging.",
+      "zh-CN": "您的基因标记与超常长寿和健康老龄化相关。",
+      "default": ""
+    },
+    "icon": "Clock",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": [
+      "rs2802292",
+      "rs4420638"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "formula": "SCORE(rs2802292:GG=10,GT=5,TT=0; rs4420638:AA=5,AG=3,GG=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Medium": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "muscle-power",
+    "name": {
+      "en": "Muscle Power",
+      "zh-CN": "肌肉力量",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with muscle strength and power performance.",
+      "zh-CN": "您的基因标记与肌肉力量和爆发力表现相关。",
+      "default": ""
+    },
+    "icon": "Zap",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": [
+      "rs1815739",
+      "rs1049434"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "formula": "SCORE(rs1815739:CC=10,CT=5,TT=0; rs1049434:CC=5,CT=3,TT=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Medium": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "endurance-performance",
+    "name": {
+      "en": "Endurance Performance",
+      "zh-CN": "耐力表现",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with aerobic capacity and endurance athletic performance.",
+      "zh-CN": "您的基因标记与有氧能力和耐力运动表现相关。",
+      "default": ""
+    },
+    "icon": "Activity",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": [
+      "rs1799752",
+      "rs4994"
+    ],
+    "referenceGenotypes": [
+      "II",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "II",
+      "AA"
+    ],
+    "formula": "SCORE(rs1799752:II=10,ID=5,DD=0; rs4994:AA=5,AG=3,GG=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Medium": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "injury-recovery",
+    "name": {
+      "en": "Injury Recovery",
+      "zh-CN": "损伤恢复",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with tissue repair and injury recovery speed.",
+      "zh-CN": "您的基因标记与组织修复和损伤恢复速度相关。",
+      "default": ""
+    },
+    "icon": "Heart",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "lifestyle",
+    "rsids": [
+      "rs1800012",
+      "rs1107946"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "formula": "SCORE(rs1800012:GG=10,GT=5,TT=0; rs1107946:AA=5,AG=3,GG=0)",
+    "scoreThresholds": {
+      "Fast": 12,
+      "Normal": 6,
+      "Slow": 0
+    },
+    "result": {
+      "Fast": {
+        "default": "快速",
+        "en": "Fast",
+        "zh-CN": "快速"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Slow": {
+        "default": "缓慢",
+        "en": "Slow",
+        "zh-CN": "缓慢"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "vitamin-a-conversion",
+    "name": {
+      "en": "Vitamin A Conversion",
+      "zh-CN": "维生素A转换",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with beta-carotene to vitamin A conversion efficiency.",
+      "zh-CN": "您的基因标记与β-胡萝卜素转换为维生素A的效率相关。",
+      "default": ""
+    },
+    "icon": "Sun",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": [
+      "rs7501331",
+      "rs12934922"
+    ],
+    "referenceGenotypes": [
+      "TT",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "TT",
+      "AA"
+    ],
+    "formula": "SCORE(rs7501331:TT=10,TC=5,CC=0; rs12934922:AA=5,AT=3,TT=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Normal": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "vitamin-e-needs",
+    "name": {
+      "en": "Vitamin E Requirements",
+      "zh-CN": "维生素E需求",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with vitamin E metabolism and antioxidant requirements.",
+      "zh-CN": "您的基因标记与维生素E代谢和抗氧化剂需求相关。",
+      "default": ""
+    },
+    "icon": "Leaf",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": [
+      "rs964184",
+      "rs6511720"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "TT"
+    ],
+    "formula": "SCORE(rs964184:GG=10,GT=5,TT=0; rs6511720:TT=5,TG=3,GG=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Normal": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "choline-needs",
+    "name": {
+      "en": "Choline Requirements",
+      "zh-CN": "胆碱需求",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with choline metabolism and dietary requirements.",
+      "zh-CN": "您的基因标记与胆碱代谢和饮食需求相关。",
+      "default": ""
+    },
+    "icon": "Dna",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": [
+      "rs7946",
+      "rs12325817"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "CC"
+    ],
+    "formula": "SCORE(rs7946:TT=10,CT=5,CC=0; rs12325817:TT=8,CT=4,CC=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Normal": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "sodium-sensitivity",
+    "name": {
+      "en": "Sodium Sensitivity",
+      "zh-CN": "钠敏感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with salt sensitivity and blood pressure response to sodium intake.",
+      "zh-CN": "您的基因标记与盐敏感性和血压对钠摄入的反应相关。",
+      "default": ""
+    },
+    "icon": "Droplet",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": [
+      "rs5068",
+      "rs4961"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "AA"
+    ],
+    "formula": "SCORE(rs5068:TT=10,GT=5,GG=0; rs4961:GG=8,AG=4,AA=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "antioxidant-needs",
+    "name": {
+      "en": "Antioxidant Requirements",
+      "zh-CN": "抗氧化剂需求",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with oxidative stress response and antioxidant requirements.",
+      "zh-CN": "您的基因标记与氧化应激反应和抗氧化剂需求相关。",
+      "default": ""
+    },
+    "icon": "Umbrella",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": [
+      "rs1001179",
+      "rs4880"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "TT"
+    ],
+    "formula": "SCORE(rs1001179:CC=10,CT=5,TT=0; rs4880:TT=5,TC=3,CC=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Normal": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "histamine-intolerance",
+    "name": {
+      "en": "Histamine Intolerance",
+      "zh-CN": "组胺不耐受",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with histamine metabolism and food intolerance.",
+      "zh-CN": "您的基因标记与组胺代谢和食物不耐受相关。",
+      "default": ""
+    },
+    "icon": "AlertCircle",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "nutrition",
+    "rsids": [
+      "rs10156191",
+      "rs1049742"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "TT"
+    ],
+    "formula": "SCORE(rs10156191:TT=10,CT=5,CC=0; rs1049742:CC=8,CT=4,TT=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "sweet-taste-preference",
+    "name": {
+      "en": "Sweet Taste Preference",
+      "zh-CN": "甜味偏好",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with sweet taste perception and sugar preference.",
+      "zh-CN": "您的基因标记与甜味感知和糖类偏好相关。",
+      "default": ""
+    },
+    "icon": "Smile",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": [
+      "rs35874116",
+      "rs307355"
+    ],
+    "referenceGenotypes": [
+      "AA",
+      "CC"
+    ],
+    "yourGenotypes": [
+      "AA",
+      "CC"
+    ],
+    "formula": "SCORE(rs35874116:GG=10,AG=5,AA=0; rs307355:TT=8,CT=4,CC=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "alcohol-preference",
+    "name": {
+      "en": "Alcohol Preference",
+      "zh-CN": "酒精偏好",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with alcohol taste preference and consumption patterns.",
+      "zh-CN": "您的基因标记与酒精味觉偏好和消费模式相关。",
+      "default": ""
+    },
+    "icon": "Wine",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": [
+      "rs1229984",
+      "rs698"
+    ],
+    "referenceGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "formula": "SCORE(rs1229984:AA=10,AG=5,GG=0; rs698:GG=5,GA=3,AA=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Medium": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "umami-taste-sensitivity",
+    "name": {
+      "en": "Umami Taste Sensitivity",
+      "zh-CN": "鲜味敏感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with umami taste perception and MSG sensitivity.",
+      "zh-CN": "您的基因标记与鲜味感知和味精敏感性相关。",
+      "default": ""
+    },
+    "icon": "Utensils",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": [
+      "rs307355",
+      "rs35874116"
+    ],
+    "referenceGenotypes": [
+      "CC",
+      "AA"
+    ],
+    "yourGenotypes": [
+      "CC",
+      "AA"
+    ],
+    "formula": "SCORE(rs307355:CC=10,CT=5,TT=0; rs35874116:AA=5,AG=3,GG=0)",
+    "scoreThresholds": {
+      "High": 12,
+      "Medium": 6,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "skin-aging",
+    "name": {
+      "en": "Skin Aging",
+      "zh-CN": "皮肤老化",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with skin aging, collagen production, and wrinkle formation.",
+      "zh-CN": "您的基因标记与皮肤老化、胶原蛋白生成和皱纹形成相关。",
+      "default": ""
+    },
+    "icon": "Sun",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": [
+      "rs1800012",
+      "rs1799750"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "GG"
+    ],
+    "formula": "SCORE(rs1800012:TT=10,GT=5,GG=0; rs1799750:AA=8,AG=4,GG=0)",
+    "scoreThresholds": {
+      "Fast": 15,
+      "Normal": 8,
+      "Slow": 0
+    },
+    "result": {
+      "Fast": {
+        "default": "快速",
+        "en": "Fast",
+        "zh-CN": "快速"
+      },
+      "Normal": {
+        "default": "正常",
+        "en": "Normal",
+        "zh-CN": "正常"
+      },
+      "Slow": {
+        "default": "缓慢",
+        "en": "Slow",
+        "zh-CN": "缓慢"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "hair-loss-male-pattern",
+    "name": {
+      "en": "Male Pattern Hair Loss",
+      "zh-CN": "男性型脱发",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with androgenetic alopecia and male pattern baldness.",
+      "zh-CN": "您的基因标记与雄激素性脱发和男性型秃发相关。",
+      "default": ""
+    },
+    "icon": "Scissors",
+    "confidence": "high",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": [
+      "rs6625163",
+      "rs1998076"
+    ],
+    "referenceGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "yourGenotypes": [
+      "AA",
+      "GG"
+    ],
+    "formula": "SCORE(rs6625163:GG=10,AG=5,AA=0; rs1998076:AA=8,AG=4,GG=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
+      }
+    },
+    "reference": []
+  },
+  {
+    "id": "acne-susceptibility",
+    "name": {
+      "en": "Acne Susceptibility",
+      "zh-CN": "痤疮易感性",
+      "default": ""
+    },
+    "description": {
+      "en": "You have genetic markers associated with acne vulgaris susceptibility and severity.",
+      "zh-CN": "您的基因标记与寻常痤疮易感性和严重程度相关。",
+      "default": ""
+    },
+    "icon": "AlertCircle",
+    "confidence": "medium",
+    "isDefault": true,
+    "createdAt": "2023-01-01T00:00:00Z",
+    "category": "appearance",
+    "rsids": [
+      "rs1051730",
+      "rs2294008"
+    ],
+    "referenceGenotypes": [
+      "GG",
+      "TT"
+    ],
+    "yourGenotypes": [
+      "GG",
+      "TT"
+    ],
+    "formula": "SCORE(rs1051730:AA=10,AG=5,GG=0; rs2294008:CC=8,CT=4,TT=0)",
+    "scoreThresholds": {
+      "High": 15,
+      "Medium": 8,
+      "Low": 0
+    },
+    "result": {
+      "High": {
+        "default": "高",
+        "en": "High",
+        "zh-CN": "高"
+      },
+      "Medium": {
+        "default": "中等",
+        "en": "Medium",
+        "zh-CN": "中等"
+      },
+      "Low": {
+        "default": "低",
+        "en": "Low",
+        "zh-CN": "低"
       }
     },
     "reference": []
