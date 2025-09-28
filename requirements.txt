@@ -1,0 +1,25 @@
+# Rootara 后端依赖包
+# Web框架
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+
+# 数据处理
+pandas==2.2.3
+pysam==0.22.1
+
+# 缓存和数据库
+redis==5.2.1
+
+# 系统监控
+psutil==6.1.1
+
+# HTTP客户端（用于健康检查）
+requests==2.32.3
+
+# 异步和性能优化
+uvloop==0.21.0
+httptools==0.6.4
+
+# 祖源分析（从GitHub安装）
+git+https://github.com/stevenliuyi/admix

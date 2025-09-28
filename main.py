@@ -1,10 +1,51 @@
 # coding=utf-8
 import os
 import secrets
-from fastapi import FastAPI, HTTPException, Depends, Header, Response
+import time
+import uuid
+import logging
+from contextlib import asynccontextmanager
+from fastapi import FastAPI, HTTPException, Depends, Header, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, RootModel
 from typing import List, Dict, Any, Union
+
+# 初始化日志系统
+from scripts.logging_config import init_logging, request_logger, performance_logger
+from scripts.health_monitor import get_health_checker
+from scripts.database_manager import get_db_pool, close_db_pool
+from scripts.cache_manager import cache_manager
+
+# 初始化日志
+init_logging()
+logger = logging.getLogger(__name__)
+
+# 生命周期管理
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """应用生命周期管理"""
+    # 启动时初始化
+    logger.info("Rootara API 服务启动中...")
+
+    # 初始化数据库连接池
+    db_pool = get_db_pool()
+    logger.info("数据库连接池已初始化")
+
+    # 初始化缓存
+    logger.info(f"缓存系统已初始化: {cache_manager.get_stats()}")
+
+    # 初始化健康检查器
+    health_checker = get_health_checker()
+    logger.info("健康检查器已初始化")
+
+    logger.info("Rootara API 服务启动完成")
+
+    yield
+
+    # 关闭时清理
+    logger.info("Rootara API 服务关闭中...")
+    close_db_pool()
+    logger.info("服务已关闭")
 
 # 自定义脚本API
 from scripts.rootara_get_user_id import get_user_id                                                  # 获取用户ID
@@ -20,10 +61,10 @@ from scripts.rootara_traits import *                                            
 
 # API
 app = FastAPI(
-    # openapi_url = None,                 # 不生成文档
+    lifespan=lifespan,
     title = 'Rootara API',
-    description = 'Rootara API',
-    version = '0.6.1'
+    description = 'Rootara API 基因数据分析平台',
+    version = '0.8.0'
 )
 
 # 允许请求 || 开发状态
@@ -34,6 +75,53 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 请求日志中间件
+@app.middleware("http")
+async def request_logging_middleware(request: Request, call_next):
+    """请求日志和性能监控中间件"""
+    request_id = str(uuid.uuid4())
+    start_time = time.time()
+
+    # 添加请求ID到请求状态
+    request.state.request_id = request_id
+
+    try:
+        response = await call_next(request)
+        duration = time.time() - start_time
+
+        # 记录请求日志
+        request_logger.log_request(
+            method=request.method,
+            endpoint=str(request.url.path),
+            request_id=request_id,
+            start_time=start_time,
+            duration=duration,
+            status_code=response.status_code
+        )
+
+        # 添加响应头
+        response.headers["X-Request-ID"] = request_id
+        response.headers["X-Response-Time"] = f"{duration:.3f}s"
+
+        return response
+
+    except Exception as e:
+        duration = time.time() - start_time
+
+        # 记录错误请求
+        request_logger.log_request(
+            method=request.method,
+            endpoint=str(request.url.path),
+            request_id=request_id,
+            start_time=start_time,
+            duration=duration,
+            status_code=500,
+            error=str(e)
+        )
+
+        # 重新抛出异常
+        raise
 
 # 设置API密钥 - 从环境变量读取
 API_KEY = os.environ.get("ROOTARA_API_KEY", "rootara_api_key_default_001")  # 生产环境必须设置环境变量
@@ -381,6 +469,145 @@ async def api_get_traits_info(report_id, api_key: str = Depends(verify_api_key))
     """
     result = result_trait_data(report_id, DB_PATH)
     return result
+
+# ================================
+# 健康检查和监控端点
+# ================================
+
+@app.get("/health", tags=["monitoring"])
+async def health_check():
+    """
+    健康检查端点 (无需API密钥)
+    """
+    try:
+        health_checker = get_health_checker(DB_PATH)
+        health_status = health_checker.perform_health_check()
+
+        # 根据健康状态设置HTTP状态码
+        status_code = 200
+        if health_status.status == 'degraded':
+            status_code = 200  # 降级但仍可用
+        elif health_status.status == 'unhealthy':
+            status_code = 503  # 服务不可用
+
+        return Response(
+            content=health_status.model_dump_json() if hasattr(health_status, 'model_dump_json') else str(health_status),
+            status_code=status_code,
+            media_type="application/json"
+        )
+
+    except Exception as e:
+        logger.error(f"健康检查失败: {e}")
+        return Response(
+            content='{"status": "error", "message": "健康检查失败"}',
+            status_code=500,
+            media_type="application/json"
+        )
+
+@app.get("/health/live", tags=["monitoring"])
+async def liveness_check():
+    """
+    存活性检查端点 (简单检查)
+    """
+    return {"status": "alive", "timestamp": time.time()}
+
+@app.get("/health/ready", tags=["monitoring"])
+async def readiness_check():
+    """
+    就绪性检查端点
+    """
+    try:
+        # 检查数据库连接
+        db_pool = get_db_pool(DB_PATH)
+        with db_pool.get_connection_context() as conn:
+            conn.execute("SELECT 1")
+
+        return {"status": "ready", "timestamp": time.time()}
+
+    except Exception as e:
+        logger.error(f"就绪性检查失败: {e}")
+        return Response(
+            content='{"status": "not_ready", "error": "数据库连接失败"}',
+            status_code=503,
+            media_type="application/json"
+        )
+
+@app.get("/metrics", tags=["monitoring"])
+async def get_metrics(api_key: str = Depends(verify_api_key)):
+    """
+    获取系统性能指标
+    """
+    try:
+        health_checker = get_health_checker(DB_PATH)
+        health_status = health_checker.perform_health_check()
+
+        # 数据库连接池统计
+        db_pool = get_db_pool(DB_PATH)
+        db_stats = db_pool.get_stats()
+
+        # 缓存统计
+        cache_stats = cache_manager.get_stats()
+
+        metrics = {
+            "timestamp": time.time(),
+            "health_status": health_status.status,
+            "uptime_seconds": health_status.uptime_seconds,
+            "system_metrics": health_status.details.get("system", {}),
+            "database_pool": db_stats,
+            "cache": cache_stats,
+            "checks": health_status.checks
+        }
+
+        return metrics
+
+    except Exception as e:
+        logger.error(f"获取指标失败: {e}")
+        raise HTTPException(status_code=500, detail=f"获取指标失败: {str(e)}")
+
+@app.post("/admin/cache/clear", tags=["admin"])
+async def clear_cache(api_key: str = Depends(verify_api_key)):
+    """
+    清空缓存 (管理员功能)
+    """
+    try:
+        result = cache_manager.clear_all()
+        logger.info("管理员清空了所有缓存")
+
+        return {
+            "status": "success" if result else "failed",
+            "message": "缓存已清空" if result else "清空缓存失败",
+            "timestamp": time.time()
+        }
+
+    except Exception as e:
+        logger.error(f"清空缓存失败: {e}")
+        raise HTTPException(status_code=500, detail=f"清空缓存失败: {str(e)}")
+
+@app.get("/admin/logs/recent", tags=["admin"])
+async def get_recent_logs(api_key: str = Depends(verify_api_key), lines: int = 100):
+    """
+    获取最近的日志 (管理员功能)
+    """
+    try:
+        log_file = os.environ.get('LOG_FILE')
+        if not log_file or not os.path.exists(log_file):
+            return {"error": "日志文件不存在或未配置"}
+
+        # 读取最后N行日志
+        with open(log_file, 'r', encoding='utf-8') as f:
+            log_lines = f.readlines()
+
+        recent_logs = log_lines[-lines:] if len(log_lines) > lines else log_lines
+
+        return {
+            "total_lines": len(log_lines),
+            "returned_lines": len(recent_logs),
+            "logs": [line.strip() for line in recent_logs]
+        }
+
+    except Exception as e:
+        logger.error(f"获取日志失败: {e}")
+        raise HTTPException(status_code=500, detail=f"获取日志失败: {str(e)}")
 
 # --- 运行应用 (通常在命令行中做，这里用于测试) ---
 if __name__ == "__main__":
