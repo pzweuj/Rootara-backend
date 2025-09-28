@@ -28,8 +28,18 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # 创建非root用户
 RUN groupadd -r rootara && useradd -r -g rootara rootara
 
-# 安装运行时依赖（优化版本）
+# 安装构建和运行时依赖
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    # 构建依赖（用于编译pysam等包）
+    gcc \
+    g++ \
+    make \
+    libc6-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
     # 运行时必需的库
     zlib1g \
     libbz2-1.0 \
@@ -41,17 +51,30 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     # 添加procfs支持用于系统监控
     procps \
-    # 清理
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/* \
-    && rm -rf /var/tmp/*
+    && rm -rf /var/lib/apt/lists/*
 
 # 创建requirements.txt用于更好的依赖管理
 COPY requirements.txt /tmp/
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r /tmp/requirements.txt \
-    && rm /tmp/requirements.txt
+    && rm /tmp/requirements.txt \
+    # 清理构建依赖以减小镜像大小
+    && apt-get update && apt-get remove -y --purge \
+    gcc \
+    g++ \
+    make \
+    libc6-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/*
 
 # 从Go构建阶段复制编译好的二进制文件
 COPY --from=go-builder /build/rootara_reader /app/scripts/
