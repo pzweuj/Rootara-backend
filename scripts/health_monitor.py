@@ -351,7 +351,7 @@ def get_health_checker(db_path: str = None) -> HealthChecker:
 
     if _health_checker is None:
         if db_path is None:
-            db_path = os.environ.get('DB_PATH', '/data/rootara.db')
+            db_path = os.environ.get('DB_PATH', '/app/database/rootara.db')
         _health_checker = HealthChecker(db_path)
 
     return _health_checker

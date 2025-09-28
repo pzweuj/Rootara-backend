@@ -94,11 +94,12 @@ COPY . .
 
 # 创建必要的目录并设置权限
 RUN mkdir -p /data /app/logs \
-    && chown -R rootara:rootara /app /data \
+    && chown -R rootara:rootara /app \
+    && chmod 755 /data \
     && chmod +x /app/scripts/*.py 2>/dev/null || true
 
-# 切换到非root用户
-USER rootara
+# 暂时保持root用户以解决volume权限问题
+# USER rootara
 
 # 健康检查
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \

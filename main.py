@@ -154,9 +154,10 @@ class StatusOutput(BaseModel):
     status_code: int
 
 # 创建API路由
-DB_PATH = '/data/rootara.db'
-if not os.path.exists('/data'):
-    os.makedirs('/data')
+DB_PATH = os.environ.get('DB_PATH', '/app/database/rootara.db')
+db_dir = os.path.dirname(DB_PATH)
+if not os.path.exists(db_dir):
+    os.makedirs(db_dir)
 
 ## 获取用户ID
 @app.post("/user/id", tags=["user_id"])

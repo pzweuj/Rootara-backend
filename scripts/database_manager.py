@@ -225,7 +225,7 @@ def get_db_pool(db_path: str = None) -> DatabaseConnectionPool:
         with _pool_lock:
             if _db_pool is None:
                 if db_path is None:
-                    db_path = os.environ.get('DB_PATH', '/data/rootara.db')
+                    db_path = os.environ.get('DB_PATH', '/app/database/rootara.db')
 
                 max_connections = int(os.environ.get('DB_MAX_CONNECTIONS', '10'))
                 timeout = float(os.environ.get('DB_TIMEOUT', '30.0'))
