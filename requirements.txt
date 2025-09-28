@@ -6,7 +6,7 @@ pydantic==2.10.3
 
 # 数据处理
 pandas==2.2.3
-pysam==0.22.1
+pysam==0.21.0
 
 # 缓存和数据库
 redis==5.2.1

@@ -8,7 +8,7 @@ COPY scripts/rootara_reader.go .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o rootara_reader rootara_reader.go
 
 # 第二阶段：Python运行环境（优化版本）
-FROM python:3.13.3-slim-bookworm
+FROM python:3.11.10-slim-bookworm
 
 # 设置环境变量
 ENV PYTHONDONTWRITEBYTECODE=1 \
