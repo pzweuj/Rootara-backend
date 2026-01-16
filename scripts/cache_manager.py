@@ -19,13 +19,13 @@ class CacheManager:
 
     def __init__(self):
         """初始化Redis连接"""
-        self.redis_host = os.environ.get("REDIS_HOST", "localhost")
-        self.redis_port = int(os.environ.get("REDIS_PORT", "6379"))
-        self.redis_db = int(os.environ.get("REDIS_DB", "0"))
-        self.redis_password = os.environ.get("REDIS_PASSWORD", None)
+        self.redis_host = os.environ.get("REDIS_HOST") or "localhost"
+        self.redis_port = int(os.environ.get("REDIS_PORT") or "6379")
+        self.redis_db = int(os.environ.get("REDIS_DB") or "0")
+        self.redis_password = os.environ.get("REDIS_PASSWORD") or None
 
         # 默认缓存过期时间 (1小时)
-        self.default_ttl = int(os.environ.get("CACHE_TTL", "3600"))
+        self.default_ttl = int(os.environ.get("CACHE_TTL") or "3600")
 
         # 连接池配置
         self.connection_pool = redis.ConnectionPool(
