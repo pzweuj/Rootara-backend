@@ -2,7 +2,7 @@
 
 > 🧬 High-performance backend service for Rootara genetic data analysis platform
 
-[![Version](https://img.shields.io/badge/version-v0.8.0-blue.svg)](https://github.com/pzweuj/Rootara-backend)
+[![Version](https://img.shields.io/badge/version-v0.8.4-blue.svg)](https://github.com/pzweuj/Rootara-backend)
 [![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115.6-green.svg)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](Dockerfile)
