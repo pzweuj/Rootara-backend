@@ -1,5 +1,7 @@
 # Rootara-backend
 
+Rootara-backend现已整合到[Rootara](https://github.com/pzweuj/Rootara)，项目归档
+
 > 🧬 High-performance backend service for Rootara genetic data analysis platform
 
 [![Version](https://img.shields.io/badge/version-v0.8.4-blue.svg)](https://github.com/pzweuj/Rootara-backend)
